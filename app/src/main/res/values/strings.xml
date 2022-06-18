@@ -14,4 +14,10 @@
     <string name="label_last_charged_to">Last Charged to</string>
     <string name="label_distance_travelled">Distance travelled</string>
     <string name="label_since_last_charge">Since last charge</string>
+    <string name="label_pick_location">Pick Location of the station to add</string>
+    <string name="label_station">Station</string>
+    <string name="label_repair">Repair</string>
+    <string name="action_add_station">Add Station</string>
+    <string name="label_cost_per_hour_in_inr">Cost per Hour in INR</string>
+    <string name="label_station_type">Select Station Type</string>
 </resources>

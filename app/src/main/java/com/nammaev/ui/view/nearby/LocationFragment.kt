@@ -4,10 +4,13 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +35,9 @@ import com.nammaev.databinding.FragmentLocationBinding
 import com.nammaev.ui.view.nearby.data.MarkerData
 import com.nammaev.ui.view.nearby.interfaces.OnStationClicked
 import kotlinx.coroutines.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
@@ -52,6 +58,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
     var isMapInitiated = false
     var isMapvisble = true
     var islistvisble = false
+    fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
 
     override fun onCreateView(
@@ -97,32 +104,60 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                 "2",
                 false
             )
-        );
+        )
 
-        binding?.userList?.adapter = userOnMapListAdapter
-        userOnMapListAdapter.setModelArrayList(markersArray)
+        binding?.apply {
 
-        binding?.userList?.addOnItemChangedListener { _, adapterPosition ->
-            marker_for_map?.showInfoWindow();
-            mGoogleMap?.animateCamera(
-                CameraUpdateFactory.newLatLng(
-                    LatLng(
-                        markersArray[adapterPosition].lattitude,
-                        markersArray[adapterPosition].longitude
-                    )
-                ), 250, null
-            );
-            if (isMapInitiated) setMarkerColor(adapterPosition)
+            userList.adapter = userOnMapListAdapter
+            userOnMapListAdapter.setModelArrayList(markersArray)
+
+            userList.addOnItemChangedListener { _, adapterPosition ->
+                marker_for_map?.showInfoWindow();
+                mGoogleMap?.animateCamera(
+                    CameraUpdateFactory.newLatLng(
+                        LatLng(
+                            markersArray[adapterPosition].lattitude,
+                            markersArray[adapterPosition].longitude
+                        )
+                    ), 250, null
+                );
+                if (isMapInitiated) setMarkerColor(adapterPosition)
+
+            }
+
+            btnAddStation.setOnClickListener {
+                btnAddStation.visibility = View.GONE
+                userList.visibility = View.GONE
+                viewAddStation.root.visibility = View.VISIBLE
+            }
+
+            viewAddStation.close.setOnClickListener {
+                btnAddStation.visibility = View.VISIBLE
+                userList.visibility = View.VISIBLE
+                viewAddStation.root.visibility = View.GONE
+
+            }
+
+            viewAddStation.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                Log.d("TAG", "onCreateView: $checkedId")
+                when (checkedId) {
+
+                    R.id.rbHome -> {
+                        viewAddStation.group.isEnabled = true
+                    }
+                    R.id.rbStation -> {
+                        viewAddStation.group.isEnabled = true
+
+                    }
+                    R.id.rbRepair -> {
+                        println("rbRepair")
+                        viewAddStation.group.isEnabled = false
+                    }
+                }
+            }
 
         }
-
-
         return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
 
@@ -143,10 +178,26 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                     CameraPosition.Builder().target(LatLng(latLng.latitude, latLng.longitude))
                         .zoom(16f).build()
                 mGoogleMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                binding?.viewAddStation?.etAddress?.text= getCompleteAddress(latLng.latitude, latLng.longitude).trim().toEditable()
             }
         }
     }
-
+    private fun getCompleteAddress(LATITUDE: Double, LONGITUDE: Double): String {
+        var strAdd = ""
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        try {
+            val addresses: List<Address> = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1)
+            val returnedAddress: Address = addresses[0]
+            val strReturnedAddress = StringBuilder("")
+            for (i in 0..returnedAddress.maxAddressLineIndex) {
+                strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n")
+            }
+            strAdd = strReturnedAddress.toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return strAdd
+    }
 
     private fun setMarkerColor(position: Int) {
         val marker: Marker? = hashMapMarker[position]

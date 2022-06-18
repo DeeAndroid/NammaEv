@@ -2,36 +2,56 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/maplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/maplayout"
     tools:context=".ui.view.nearby.LocationFragment">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:text="@string/action_add_station"
+        android:textAllCaps="false"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/_25sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            class="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
-        <com.yarolegovich.discretescrollview.DiscreteScrollView
-            android:id="@+id/user_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:dsv_orientation="horizontal"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/_24sdp"
-            tools:listitem="@layout/item_nearby_user"
-            />
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
+    <com.yarolegovich.discretescrollview.DiscreteScrollView
+        android:id="@+id/user_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:orientation="horizontal"
+        app:dsv_orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_nearby_user" />
+
+    <include
+        android:id="@+id/viewAddStation"
+        layout="@layout/item_add_station"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

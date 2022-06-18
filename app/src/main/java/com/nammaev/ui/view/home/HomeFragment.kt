@@ -13,14 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleObserver
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentHomeBinding
 import com.nammaev.di.utility.Resource
 import com.nammaev.ui.MainActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class HomeFragment : Fragment(), LifecycleObserver {
+class HomeFragment : Fragment() {
 
     private val homeViewModel by sharedViewModel<EvViewModel>()
     private var binding: FragmentHomeBinding? = null
