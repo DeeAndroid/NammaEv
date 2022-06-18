@@ -9,12 +9,12 @@ data class ResUser(
 )
 
 data class ResUserData(
-    val lastChargeLocation: String? = null,
-    val rideStateFromLastCharge: String? = null,
-    val lastCharge: String? = null,
-    val name: String? = null,
-    val health: String? = null,
-    val range: String? = null,
+    val lastChargeLocation: String = "",
+    val rideStateFromLastCharge: String = "",
+    val lastCharge: String = "",
+    val name: String = "",
+    val health: String = "",
+    val range: String = "",
     @SerializedName("_id") val id: String? = null,
-    val vehicle: String? = null
+    val vehicle: String = ""
 )

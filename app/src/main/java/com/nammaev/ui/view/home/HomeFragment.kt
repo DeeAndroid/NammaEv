@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.nammaev.data.network.api.response.ResUserData
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentHomeBinding
 import com.nammaev.di.isSuccess
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.userData = ResUserData()
         viewModel.getUser()
         listenForData()
     }
