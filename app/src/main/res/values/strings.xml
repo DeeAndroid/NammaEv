@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Neum</string>
-    <string name="label_select_service">Select Service</string>
+    <string name="app_name">NammaEv</string>
+    <string name="label_home">Home</string>
     <string name="label_air_conditioner">Air Conditioner</string>
     <string name="action_pick_date_and_time">Proceed to Pick Date and Time</string>
     <string name="label_no_space_or_service">No services or space is available</string>

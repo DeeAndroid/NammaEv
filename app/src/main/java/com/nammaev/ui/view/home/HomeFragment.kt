@@ -17,17 +17,17 @@ import androidx.lifecycle.LifecycleObserver
 import com.nammaev.R
 import com.nammaev.data.network.api.response.Services
 import com.nammaev.data.viewmodel.EvViewModel
+import com.nammaev.databinding.FragmentServiceBinding
+import com.nammaev.di.loadImage
 import com.nammaev.di.showAlert
 import com.nammaev.di.toast
 import com.nammaev.di.utility.Resource
 import com.nammaev.ui.MainActivity
-import com.nammaev.databinding.FragmentServiceBinding
-import com.nammaev.di.loadImage
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), LifecycleObserver {
 
-    private val serviceViewModel by viewModel<EvViewModel>()
+    private val homeViewModel by sharedViewModel<EvViewModel>()
     private lateinit var binding: FragmentServiceBinding
     private val serviceList = mutableListOf<Services>()
 
@@ -63,12 +63,12 @@ class HomeFragment : Fragment(), LifecycleObserver {
         }
 
         //  getServices()  //  Both Works
-        serviceViewModel.getServices()
+        homeViewModel.getServices()
         listenForData()
     }
 
     private fun listenForData() {
-        serviceViewModel.responseLiveData.observe(viewLifecycleOwner) { resService ->
+        homeViewModel.responseLiveData.observe(viewLifecycleOwner) { resService ->
             when (resService) {
                 is Resource.Loading -> (activity as MainActivity).blockInput()
                 is Resource.Success -> {
@@ -82,7 +82,7 @@ class HomeFragment : Fragment(), LifecycleObserver {
                             context?.toast(getString(R.string.label_no_space_or_service))
                     }
                     (activity as MainActivity).unblockInput()
-                    serviceViewModel.responseLiveData.removeObservers(this)
+                    homeViewModel.responseLiveData.removeObservers(this)
                 }
                 is Resource.Failure -> {
                     (activity as MainActivity).unblockInput()

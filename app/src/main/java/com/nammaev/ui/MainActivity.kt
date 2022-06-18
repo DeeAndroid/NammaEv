@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.nammaev.R
 import com.nammaev.di.blockInput
 import com.nammaev.di.unblockInput
@@ -20,16 +21,13 @@ class MainActivity : AppCompatActivity() {
         binding = MainActivityBinding.inflate(LayoutInflater.from(this))
         setContentView(binding?.root)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            binding?.toolbar?.visibility = View.VISIBLE
-            when (destination.id) {
-                R.id.splashFragment -> binding?.toolbar?.visibility = View.GONE
-            }
+
         }
+        NavigationUI.setupWithNavController(binding?.bottomNavHome!!, navController)   //  Navigation bar
 
     }
 
