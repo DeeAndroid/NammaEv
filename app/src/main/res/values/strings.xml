@@ -20,4 +20,7 @@
     <string name="action_add_station">Add Station</string>
     <string name="label_cost_per_hour_in_inr">Cost per Hour in INR</string>
     <string name="label_station_type">Select Station Type</string>
+    <string name="label_no_parts_available">No parts available</string>
+    <string name="symbol_rupee">₹</string>
+    <string name="label_enter_address">Enter your address or choose on map</string>
 </resources>

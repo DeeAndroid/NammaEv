@@ -26,6 +26,7 @@
         android:letterSpacing="0.02"
         android:text="@string/label_pick_location"
         android:textColor="@color/black"
+        android:gravity="center_vertical"
         android:textSize="@dimen/_12ssp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@id/close"

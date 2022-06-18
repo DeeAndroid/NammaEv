@@ -13,10 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentHomeBinding
 import com.nammaev.di.utility.Resource
 import com.nammaev.ui.MainActivity
+import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
@@ -38,18 +40,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun listenForData() {
-        homeViewModel.responseLiveData.observe(viewLifecycleOwner) { resService ->
-            when (resService) {
-                is Resource.Loading -> (activity as MainActivity).blockInput()
-                is Resource.Success -> {
-                    resService.value.data?.let {
+        lifecycleScope.launchWhenCreated {
+            homeViewModel.responseLiveData.collect { resService ->
+                when (resService) {
+                    is Resource.Loading -> (activity as MainActivity).blockInput()
+                    is Resource.Success -> {
+                        resService.value.data?.let {
 
+                        }
+                        (activity as MainActivity).unblockInput()
                     }
-                    (activity as MainActivity).unblockInput()
-                    homeViewModel.responseLiveData.removeObservers(this)
-                }
-                is Resource.Failure -> {
-                    (activity as MainActivity).unblockInput()
+                    is Resource.Failure -> {
+                        (activity as MainActivity).unblockInput()
+                    }
                 }
             }
         }

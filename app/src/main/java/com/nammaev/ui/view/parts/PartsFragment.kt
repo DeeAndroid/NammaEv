@@ -13,7 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.lifecycleScope
 import com.nammaev.R
 import com.nammaev.data.network.api.response.Services
 import com.nammaev.data.viewmodel.EvViewModel
@@ -21,13 +21,13 @@ import com.nammaev.databinding.FragmentPartsBinding
 import com.nammaev.di.toast
 import com.nammaev.di.utility.Resource
 import com.nammaev.ui.MainActivity
+import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class PartsFragment : Fragment(), LifecycleObserver {
+class PartsFragment : Fragment() {
 
     private val homeViewModel by sharedViewModel<EvViewModel>()
     private var binding: FragmentPartsBinding? = null
-    private val serviceList = mutableListOf<Services>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -39,11 +39,10 @@ class PartsFragment : Fragment(), LifecycleObserver {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-            rvService.adapter = EvPartsAdapter { isAdded, service ->
-                if (isAdded)
-                    serviceList.add(service)
-                else
-                    serviceList.remove(service)
+            rvParts.adapter = EvPartsAdapter { service ->
+                AddressBottomSheetDialog.showAddressBottomSheet(childFragmentManager) { address ->
+                    
+                }
             }
         }
 
@@ -52,21 +51,28 @@ class PartsFragment : Fragment(), LifecycleObserver {
     }
 
     private fun listenForData() {
-        homeViewModel.responseLiveData.observe(viewLifecycleOwner) { resService ->
-            when (resService) {
-                is Resource.Loading -> (activity as MainActivity).blockInput()
-                is Resource.Success -> {
-                    resService.value.data?.let {
-                        if (!it.services.isNullOrEmpty())
-                            (binding?.rvService?.adapter as EvPartsAdapter).addServiceList(it.services as List<Services>)
-                        else
-                            context?.toast(getString(R.string.label_no_parts))
+        lifecycleScope.launchWhenCreated {
+            homeViewModel.responseLiveData.collect { resService ->
+                when (resService) {
+                    is Resource.Loading -> (activity as MainActivity).blockInput()
+                    is Resource.Success -> {
+                        resService.value.data?.let {
+                            binding?.apply {
+                                if (!it.services.isNullOrEmpty()) {
+                                    (rvParts.adapter as EvPartsAdapter).addServiceList(it.services as List<Services>)
+                                    tvNoParts.visibility = View.GONE
+                                } else {
+                                    tvNoParts.visibility = View.VISIBLE
+                                    context?.toast(getString(R.string.label_no_parts))
+                                }
+                            }
+                        }
+                        (activity as MainActivity).unblockInput()
                     }
-                    (activity as MainActivity).unblockInput()
-                    homeViewModel.responseLiveData.removeObservers(this)
-                }
-                is Resource.Failure -> {
-                    (activity as MainActivity).unblockInput()
+                    is Resource.Failure -> {
+                        binding?.tvNoParts?.visibility = View.VISIBLE
+                        (activity as MainActivity).unblockInput()
+                    }
                 }
             }
         }

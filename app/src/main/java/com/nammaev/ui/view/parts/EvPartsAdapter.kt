@@ -10,16 +10,14 @@ package com.nammaev.ui.view.parts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
-import com.nammaev.R
 import com.nammaev.data.network.api.response.Services
 import com.nammaev.databinding.LayoutEvPartsItemBinding
-import com.nammaev.di.getCompatColor
 
-typealias myService = (Boolean, Services) -> Unit
+typealias myService = (Services) -> Unit
 
-class EvPartsAdapter(val myService: myService) : RecyclerView.Adapter<EvPartsAdapter.CategoryHolder>() {
+class EvPartsAdapter(val myService: myService) :
+    RecyclerView.Adapter<EvPartsAdapter.CategoryHolder>() {
 
     val serviceList = mutableListOf<Services>()
 
@@ -51,7 +49,7 @@ class EvPartsAdapter(val myService: myService) : RecyclerView.Adapter<EvPartsAda
         fun bindUi(position: Int) {
             binding.apply {
                 serviceList[position].let { _service ->
-                    tvServiceTitle.text = _service.serviceName
+                    tvPartTitle.text = _service.serviceName
                     tvCost.text = "Cost: ${_service.rate} sar"
                     if (position == 0)
                         tvDesc.text =
@@ -61,29 +59,12 @@ class EvPartsAdapter(val myService: myService) : RecyclerView.Adapter<EvPartsAda
 
                     ivServicePic.clipToOutline = true
 
-                    //  Added bcs, when working with large data, recyclerview will reuse its old view,
-                    //  thus making add button's view to display old data
-                    updateButton(serviceList[position].isAdded, btnAdd)
 
-                    btnAdd.setOnClickListener {
+                    btnBuy.setOnClickListener {
                         serviceList[position].isAdded = !serviceList[position].isAdded
-                        updateButton(serviceList[position].isAdded, btnAdd)
-                        //  myService.invoke(serviceList[position].isAdded, _service)
-//                        notifyItemChanged(position)
+                        myService.invoke(serviceList[position])
                     }
                 }
-            }
-        }
-
-        private fun updateButton(isAdded: Boolean, btnAdd: Button) {
-            if (isAdded) {
-                btnAdd.text = itemView.context.getString(R.string.action_added)
-                btnAdd.setTextColor(btnAdd.getCompatColor(R.color.white))
-                btnAdd.setBackgroundColor(btnAdd.getCompatColor(R.color.yellow))
-            } else {
-                btnAdd.text = itemView.context.getString(R.string.action_add)
-                btnAdd.setTextColor(btnAdd.getCompatColor(R.color.black))
-                btnAdd.setBackgroundColor(btnAdd.getCompatColor(R.color.whitish_grey))
             }
         }
 

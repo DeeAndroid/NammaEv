@@ -13,15 +13,15 @@
         android:layout_height="64dp"
         android:layout_marginStart="@dimen/spacing_tiny"
         android:background="@drawable/corner_imageview_bg"
+        android:padding="@dimen/_4sdp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@id/tvDesc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:backgroundTint="@color/black"
-        tools:src="@drawable/appliance_pic" />
+        tools:src="@drawable/ic_oil" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnBuy"
         android:layout_width="74dp"
         android:layout_height="38dp"
         android:layout_marginEnd="@dimen/spacing_tiny"
@@ -35,36 +35,36 @@
         app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivServicePic"
-        tools:text="@string/action_add" />
+        tools:text="@string/action_buy" />
 
     <com.nammaev.utils.CommonTextView
-        android:id="@+id/tvServiceTitle"
+        android:id="@+id/tvPartTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@id/btnAdd"
+        app:layout_constraintEnd_toStartOf="@id/btnBuy"
         app:layout_constraintStart_toEndOf="@id/ivServicePic"
         app:layout_constraintTop_toTopOf="@id/ivServicePic"
-        tools:text="Title" />
+        tools:text="Disc oil" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/green"
-        android:textSize="@dimen/size_13"
-        app:layout_constraintEnd_toEndOf="@+id/tvServiceTitle"
-        app:layout_constraintStart_toStartOf="@id/tvServiceTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvServiceTitle"
-        tools:text="120 SAR per unit" />
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintEnd_toEndOf="@+id/tvPartTitle"
+        app:layout_constraintStart_toStartOf="@id/tvPartTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvPartTitle"
+        tools:text="₹ 120" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDesc"
         style="@style/DescriptionTextView"
-        app:layout_constraintEnd_toEndOf="@id/btnAdd"
-        app:layout_constraintStart_toStartOf="@id/tvServiceTitle"
-        app:layout_constraintTop_toBottomOf="@id/btnAdd"
+        app:layout_constraintEnd_toEndOf="@id/btnBuy"
+        app:layout_constraintStart_toStartOf="@id/tvPartTitle"
+        app:layout_constraintTop_toBottomOf="@id/btnBuy"
         tools:text="Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair " />
 
     <View
