@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_small"
+    tools:context="com.nis.nammaev.com.nammaev.ui.view.home.MyServiceAdapter">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivServicePic"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="@dimen/spacing_tiny"
+        android:background="@drawable/corner_imageview_bg"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@id/tvDesc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:backgroundTint="@color/black"
+        tools:src="@drawable/appliance_pic" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAdd"
+        android:layout_width="74dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="@dimen/spacing_tiny"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_13"
+        app:backgroundTint="@color/whitish_grey"
+        app:cornerRadius="@dimen/spacing_12"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivServicePic"
+        tools:text="@string/action_add" />
+
+    <com.nammaev.utils.CommonTextView
+        android:id="@+id/tvServiceTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/btnAdd"
+        app:layout_constraintStart_toEndOf="@id/ivServicePic"
+        app:layout_constraintTop_toTopOf="@id/ivServicePic"
+        tools:text="Title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:textSize="@dimen/size_13"
+        app:layout_constraintEnd_toEndOf="@+id/tvServiceTitle"
+        app:layout_constraintStart_toStartOf="@id/tvServiceTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvServiceTitle"
+        tools:text="120 SAR per unit" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDesc"
+        style="@style/DescriptionTextView"
+        app:layout_constraintEnd_toEndOf="@id/btnAdd"
+        app:layout_constraintStart_toStartOf="@id/tvServiceTitle"
+        app:layout_constraintTop_toBottomOf="@id/btnAdd"
+        tools:text="Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair Cost for the repair " />
+
+    <View
+        android:id="@+id/viewLine2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:background="@color/line_color"
+        app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

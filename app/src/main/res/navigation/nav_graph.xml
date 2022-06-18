@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Nethaji on 12/9/21 11:49 AM
+  ~  * Copyright (c) 2021 . All rights reserved.
+  ~  * Last modified 12/9/21 11:49 AM
+  ~  */
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.nammaev.ui.view.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_serviceFragment"
+            app:destination="@id/serviceFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/serviceFragment"
+        android:name="com.nammaev.ui.view.home.HomeFragment"
+        android:label="Select Service"
+        tools:layout="@layout/fragment_service" />
+</navigation>
