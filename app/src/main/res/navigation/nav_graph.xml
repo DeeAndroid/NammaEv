@@ -19,8 +19,8 @@
         android:label="Splash"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_serviceFragment"
-            app:destination="@id/serviceFragment"
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
@@ -29,8 +29,13 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/serviceFragment"
-        android:name="com.nammaev.ui.view.home.HomeFragment"
+        android:id="@+id/homeFragment"
+        android:name="com.nammaev.ui.view.home.PartsFragment"
         android:label="Select Service"
         tools:layout="@layout/fragment_service" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.nammaev.ui.view.nearby.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location" />
 </navigation>

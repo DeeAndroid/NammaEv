@@ -25,7 +25,11 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        when(controller.currentDestination?.id) {
+            R.id.splashFragment -> binding?.bottomNavHome!!.visibility=View.GONE
+           else -> binding?.bottomNavHome!!.visibility=View.VISIBLE
 
+        }
         }
         NavigationUI.setupWithNavController(binding?.bottomNavHome!!, navController)   //  Navigation bar
 

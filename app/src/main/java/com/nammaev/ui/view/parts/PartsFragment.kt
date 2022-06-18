@@ -25,7 +25,7 @@ import com.nammaev.di.utility.Resource
 import com.nammaev.ui.MainActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class HomeFragment : Fragment(), LifecycleObserver {
+class PartsFragment : Fragment(), LifecycleObserver {
 
     private val homeViewModel by sharedViewModel<EvViewModel>()
     private lateinit var binding: FragmentServiceBinding
@@ -41,11 +41,19 @@ class HomeFragment : Fragment(), LifecycleObserver {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-
+            rvService.adapter = MyServiceAdapter { isAdded, service ->
+                if (isAdded)
+                    serviceList.add(service)
+                else
+                    serviceList.remove(service)
+            }
 
             btnPickDateAndTime.setOnClickListener {
 //                if (serviceList.isEmpty()) {
                 serviceList.clear()
+                serviceList.addAll(
+                    (binding.rvService.adapter as MyServiceAdapter).getSelectedServiceList()
+                        .filter { it.isAdded })
                 if (serviceList.isEmpty()) {
                     context?.toast("Please add atleast one service to book")
                     return@setOnClickListener
@@ -79,10 +87,10 @@ class HomeFragment : Fragment(), LifecycleObserver {
                 is Resource.Failure -> {
                     (activity as MainActivity).unblockInput()
 //                    this toast resService.errorCode.toString() + resService.errorBody.toString()
-                    /*activity?.showAlert(
+                    activity?.showAlert(
                         resService.errorCode.toString() + resService.errorBody.toString(),
                         "Try opening the app again"
-                    )*/
+                    )
                 }
             }
         }

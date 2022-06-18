@@ -29,7 +29,7 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             delay(2000)
-            val action = SplashFragmentDirections.actionSplashFragmentToServiceFragment()
+            val action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
           //  action.setSafeArguments("Some Arguments here")
             findNavController().navigate(action)
             //  findNavController().navigate(R.id.action_splashFragment_to_serviceFragment)
