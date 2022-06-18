@@ -10,7 +10,7 @@ package com.nammaev.data.network.http
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
-import com.nis.neum.BuildConfig
+import com.nammaev.BuildConfig
 import com.nammaev.di.utility.Extras
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

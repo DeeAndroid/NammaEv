@@ -12,10 +12,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
-import com.nis.neum.R
+import com.nammaev.R
 import com.nammaev.data.network.api.response.Services
-import com.nis.neum.databinding.LayoutUserItemBinding
+import com.nammaev.databinding.LayoutUserItemBinding
 import com.nammaev.di.getCompatColor
+import com.nammaev.di.loadImage
 
 typealias myService = (Boolean, Services) -> Unit
 

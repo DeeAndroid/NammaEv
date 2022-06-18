@@ -1,4 +1,4 @@
-package com.nis.neum
+package com.nis.NammaEv
 
 import org.junit.Test
 

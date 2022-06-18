@@ -1,4 +1,4 @@
 include ':app'
-rootProject.name = "Neum"
 include ':sdp-android'
 include ':ssp-android'
+rootProject.name = "NammaEv"

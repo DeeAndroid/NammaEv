@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.nis.neum.R
+import com.nammaev.R
 import com.nammaev.data.network.api.response.ResError
 import com.nammaev.utils.CrossFadeDrawable
 
