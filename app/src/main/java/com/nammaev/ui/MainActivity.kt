@@ -6,10 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.nis.neum.R
+import com.nammaev.R
 import com.nammaev.di.blockInput
 import com.nammaev.di.unblockInput
-import com.nis.neum.databinding.ActivityMainBinding as MainActivityBinding
+import com.nammaev.databinding.ActivityMainBinding as MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
     private var binding: MainActivityBinding? = null

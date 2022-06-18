@@ -15,7 +15,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.nis.neum.databinding.FragmentSplashBinding
+import com.nammaev.databinding.FragmentSplashBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -29,8 +29,7 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             delay(2000)
-            val action =
-                com.nis.nammaev.ui.view.SplashFragmentDirections.actionSplashFragmentToServiceFragment()
+            val action = SplashFragmentDirections.actionSplashFragmentToServiceFragment()
           //  action.setSafeArguments("Some Arguments here")
             findNavController().navigate(action)
             //  findNavController().navigate(R.id.action_splashFragment_to_serviceFragment)

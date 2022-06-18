@@ -14,14 +14,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
-import com.nis.nammaev.R
+import com.nammaev.R
 import com.nammaev.data.network.api.response.Services
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.di.showAlert
 import com.nammaev.di.toast
 import com.nammaev.di.utility.Resource
 import com.nammaev.ui.MainActivity
-import com.nis.neum.databinding.FragmentServiceBinding
+import com.nammaev.databinding.FragmentServiceBinding
+import com.nammaev.di.loadImage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), LifecycleObserver {
