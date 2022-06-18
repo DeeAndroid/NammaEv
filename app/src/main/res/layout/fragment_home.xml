@@ -63,6 +63,7 @@
         style="@style/TitleTextView"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
+        android:drawableTint="@color/black"
         android:drawableStart="@drawable/ic_discharge"
         android:drawablePadding="@dimen/spacing_tiny"
         android:textSize="@dimen/size_14"
@@ -101,14 +102,13 @@
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_small"
+        android:elevation="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/spacing_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cvDistance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pbBattery"
-        app:strokeColor="@color/light_black"
-        app:strokeWidth="1dp">
-
+>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -160,10 +160,10 @@
         android:layout_marginEnd="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="@+id/cvLastCharge"
         app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="@dimen/_5sdp"
         app:layout_constraintStart_toEndOf="@+id/cvLastCharge"
         app:layout_constraintTop_toTopOf="@+id/cvLastCharge"
-        app:strokeColor="@color/light_black"
-        app:strokeWidth="1dp">
+      >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
