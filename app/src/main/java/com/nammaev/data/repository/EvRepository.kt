@@ -8,6 +8,7 @@
 
 package com.nammaev.data.repository
 
+import com.nammaev.data.network.api.response.AddRatingRequestBody
 import com.nammaev.data.network.api.service.ServiceApi
 import com.nammaev.di.utility.ResponseReceiver
 
@@ -18,6 +19,10 @@ class EvRepository(private val api: ServiceApi) : ResponseReceiver {
     suspend fun getStations() = callApi { api.getStations() }
 
     suspend fun getProducts() = callApi { api.getProducts() }
+
+    suspend fun addRating(addRatingRequestBody: AddRatingRequestBody) = callApi {
+        api.addRating(addRatingRequestBody)
+    }
 
     companion object Factory {
         fun create(api: ServiceApi) = EvRepository(api)

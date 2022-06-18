@@ -42,6 +42,15 @@ class MainActivity : AppCompatActivity() {
         this unblockInput binding?.pbServices
     }
 
+    override fun onBackPressed() {
+        when(navController.currentDestination?.id) {
+            R.id.homeFragment -> finish()
+            R.id.locationFragment -> finish()
+            R.id.partsFragment -> finish()
+            else -> super.onBackPressed()
+        }
+    }
+
     companion object {
         private const val TAG = "MainActivity"
     }

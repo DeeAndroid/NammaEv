@@ -45,8 +45,7 @@ import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
-
-class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
+class LocationFragment : Fragment(), OnMapReadyCallback {
 
     private var binding: FragmentLocationBinding? = null
     private val viewModel by sharedViewModel<EvViewModel>()
@@ -56,10 +55,8 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
     var mLastLocation: Location? = null
     var mCurrLocationMarker: Marker? = null
     var mFusedLocationClient: FusedLocationProviderClient? = null
-    var markersArray: MutableList<MarkerData> = ArrayList<MarkerData>()
-    var mapmarker: Bitmap? = null
+    var markersArray = mutableListOf<MarkerData>()
     val hashMapMarker: HashMap<Int, Marker> = HashMap()
-    val userOnMapListAdapter = StationsAdapter(this)
 
     var marker_for_map: Marker? = null
     var isMapInitiated = false
@@ -70,118 +67,96 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
     private var blackPolyline: Polyline? = null
     fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (binding == null)
+        if (binding == null) {
             binding = FragmentLocationBinding.inflate(layoutInflater, container, false)
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
+            val mapFrag = SupportMapFragment.newInstance()
+            val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.map, mapFrag)
+            fragmentTransaction.commit()
+            mapFrag.getMapAsync(this)
 
-        val mapFrag = SupportMapFragment.newInstance()
-        val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.map, mapFrag)
-        fragmentTransaction.commit()
-        mapFrag.getMapAsync(this)
+            binding?.apply {
 
-        viewModel.getStations()
-        listenForData()
-        markersArray.add(
-            MarkerData(
-                13.050417,
-                77.7574288,
-                "https://png.pngitem.com/pimgs/s/49-497522_transparent-guy-thinking-png-random-guy-cartoon-png.png",
-                false
-            )
-        )
-        markersArray.add(
-            MarkerData(
-                11.161775,
-                77.3562897,
-                "https://png.pngitem.com/pimgs/s/49-497669_weegeepedia-cartoon-hd-png-download.png",
-                false
-            )
-        )
-        markersArray.add(
-            MarkerData(
-                11.1699052,
-                77.36545976,
-                "https://png.pngitem.com/pimgs/s/49-497724_simple-guy-skills-simple-guy-hd-png-download.png",
-                false
-            )
-        )
-        markersArray.add(
-            MarkerData(
-                11.1499602,
-                77.3753476,
-                "https://png.pngitem.com/pimgs/s/49-497810_random-scientist-guy-cartoon-hd-png-download.png",
-                false
-            )
-        )
-        markersArray.add(
-            MarkerData(
-                11.1797052,
-                77.3852376,
-                "https://png.pngitem.com/pimgs/s/49-498069_talk-about-random-wiki-shy-guy-mario-hd.png",
-                false
-            )
-        )
+                userList.adapter = StationsAdapter(object : OnStationClicked {
+                    override fun onStationClicked(id: MarkerData, position: Int) {
+                        StationDetailsDialogFragment.showAddressBottomSheet(
+                            childFragmentManager,
+                            position
+                        ) {
+                            val paths: MutableList<LatLng> = ArrayList<LatLng>()
+                            paths.add(0, latLng!!)
+                            paths.add(
+                                1,
+                                LatLng(
+                                    markersArray[position].lattitude,
+                                    markersArray[position].longitude
+                                )
+                            )
 
-
-
-        binding?.apply {
-
-            userList.adapter = userOnMapListAdapter
-            userOnMapListAdapter.setModelArrayList(markersArray)
-
-            userList.addOnItemChangedListener { _, adapterPosition ->
-                marker_for_map?.showInfoWindow()
-                mGoogleMap?.animateCamera(
-                    CameraUpdateFactory.newLatLng(
-                        LatLng(
-                            markersArray[adapterPosition].lattitude,
-                            markersArray[adapterPosition].longitude
-                        )
-                    ), 250, null
-                )
-                if (isMapInitiated) setMarkerColor(adapterPosition)
-
-            }
-
-            btnAddStation.setOnClickListener {
-                btnAddStation.visibility = View.GONE
-                userList.visibility = View.GONE
-                viewAddStation.root.visibility = View.VISIBLE
-            }
-
-            viewAddStation.close.setOnClickListener {
-                btnAddStation.visibility = View.VISIBLE
-                userList.visibility = View.VISIBLE
-                viewAddStation.root.visibility = View.GONE
-
-            }
-
-            viewAddStation.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-                Log.d("TAG", "onCreateView: $checkedId")
-                when (checkedId) {
-
-                    R.id.rbHome -> {
-                        viewAddStation.group.isEnabled = true
+                            showPath(
+                                mutableListOf(
+                                    LatLng(latLng!!.latitude, latLng!!.longitude),
+                                    LatLng(
+                                        markersArray[position].lattitude,
+                                        markersArray[position].longitude
+                                    )
+                                )
+                            )
+                        }
                     }
-                    R.id.rbStation -> {
-                        viewAddStation.group.isEnabled = true
+                })
 
-                    }
-                    R.id.rbRepair -> {
-                        println("rbRepair")
-                        viewAddStation.group.isEnabled = false
+                userList.addOnItemChangedListener { _, adapterPosition ->
+                    if (markersArray.size <= adapterPosition) return@addOnItemChangedListener
+                    marker_for_map?.showInfoWindow()
+                    mGoogleMap?.animateCamera(
+                        CameraUpdateFactory.newLatLng(
+                            LatLng(
+                                markersArray[adapterPosition].lattitude,
+                                markersArray[adapterPosition].longitude
+                            )
+                        ), 250, null
+                    )
+                    if (isMapInitiated) setMarkerColor(adapterPosition)
+                }
+
+                btnAddStation.setOnClickListener {
+                    btnAddStation.visibility = View.GONE
+                    userList.visibility = View.GONE
+                    viewAddStation.root.visibility = View.VISIBLE
+                }
+
+                viewAddStation.close.setOnClickListener {
+                    btnAddStation.visibility = View.VISIBLE
+                    userList.visibility = View.VISIBLE
+                    viewAddStation.root.visibility = View.GONE
+                }
+
+                viewAddStation.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                    when (checkedId) {
+                        R.id.rbHome -> {
+                            viewAddStation.group.isEnabled = true
+                        }
+                        R.id.rbStation -> {
+                            viewAddStation.group.isEnabled = true
+                        }
+                        R.id.rbRepair -> {
+                            viewAddStation.group.isEnabled = false
+                        }
                     }
                 }
+
             }
 
+            listenForData()
+            viewModel.getStations()
         }
         return binding?.root
     }
@@ -193,20 +168,29 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                     is Resource.Loading -> (activity as MainActivity).blockInput()
                     is Resource.Success -> {
                         if (resUser.value.code?.isSuccess()!!) {
-
                             markersArray.clear()
-                            resUser.value.resStation?.forEachIndexed { index, resStationItem ->
+                            resUser.value.data?.forEachIndexed { index, resStationItem ->
                                 markersArray.add(
                                     index, MarkerData(
                                         resStationItem?.location?.lat?.toDouble()!!,
                                         resStationItem.location.lng?.toDouble()!!,
                                         resStationItem.avatar.toString(),
                                         false
-
                                     )
                                 )
                             }
-
+                            (binding?.userList?.adapter as StationsAdapter).setModelArrayList(markersArray)
+                            if (!markersArray.isNullOrEmpty()) {
+                                addMarkers(mGoogleMap)
+                                mGoogleMap?.animateCamera(
+                                    CameraUpdateFactory.newLatLng(
+                                        LatLng(
+                                            markersArray[0].lattitude,
+                                            markersArray[0].longitude
+                                        )
+                                    ), 250, null
+                                )
+                            }
                         } else
                             requireActivity() showToast resUser.value.message.toString()
                         (activity as MainActivity).unblockInput()
@@ -219,7 +203,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
             }
         }
     }
-
 
     var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -345,7 +328,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
 
     override fun onPause() {
         super.onPause()
-
         //stop location updates when Activity is no longer active
         if (mFusedLocationClient != null) {
             mFusedLocationClient!!.removeLocationUpdates(mLocationCallback)
@@ -401,31 +383,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                     )
 
                 )
-                for (i in markersArray.indices) {
-                    Log.d("TAG", "onMapReady: $i")
-                    val markerIcon = getMarkerIcon(
-                        root = activity?.findViewById(R.id.maplayout) as ViewGroup,
-                        text = "markerName",
-                        isSelected = markersArray[i].selected, markersArray[i].avatar
-                    )
-                    lifecycleScope.launch {
-
-                        marker_for_map = p0.addMarker(
-                            MarkerOptions()
-                                .position(
-                                    LatLng(
-                                        markersArray[i].lattitude,
-                                        markersArray[i].longitude
-                                    )
-                                )
-                                .icon(markerIcon?.let { BitmapDescriptorFactory.fromBitmap(it) })
-
-                            //  .icon(markerIcon)
-                        )
-                        marker_for_map?.tag = i
-                        hashMapMarker.put(i, marker_for_map!!)
-                    }
-                }
+                addMarkers(p0)
                 isMapInitiated = true
 
 
@@ -451,25 +409,35 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
         }
     }
 
-    override fun onStationClicked(id: MarkerData, position: Int) {
-        StationDetailsDialogFragment.showAddressBottomSheet(childFragmentManager, position) {
-            val paths: MutableList<LatLng> = ArrayList<LatLng>()
-            paths.add(0, latLng!!)
-            paths.add(1, LatLng(markersArray[position].lattitude, markersArray[position].longitude))
+    private fun addMarkers(p0: GoogleMap?) {
+        for (i in markersArray.indices) {
+            Log.d("TAG", "onMapReady: $i")
+            val marker: View = requireActivity().findViewById(R.id.maplayout) ?: return
 
-            showPath(mutableListOf(
-                LatLng(
-                    latLng!!.latitude,
-                    latLng!!.longitude
-                ),
-                LatLng(
-                    markersArray[position].lattitude,
-                    markersArray[position].longitude
+            val markerIcon = getMarkerIcon(
+                root = marker as ViewGroup,
+                text = "markerName",
+                isSelected = markersArray[i].selected, markersArray[i].avatar
+            )
+            lifecycleScope.launch {
+
+                marker_for_map = p0?.addMarker(
+                    MarkerOptions()
+                        .position(
+                            LatLng(
+                                markersArray[i].lattitude,
+                                markersArray[i].longitude
+                            )
+                        )
+                        .icon(markerIcon?.let { BitmapDescriptorFactory.fromBitmap(it) })
+
+                    //  .icon(markerIcon)
                 )
-            ))
+                marker_for_map?.tag = i
+                hashMapMarker.put(i, marker_for_map!!)
+            }
         }
     }
-
 
     private fun showPath(latLngList: MutableList<LatLng>) {
         val builder = LatLngBounds.Builder()
@@ -546,7 +514,6 @@ private class CustomMarkerView(
 
         }
     }
-
 
     fun setImages(avatar: String): Bitmap? {
         var bitmap: Bitmap? = null

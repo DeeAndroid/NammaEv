@@ -1,11 +1,3 @@
-/*
- * *
- *  * Created by Nethaji on 11/9/21 10:34 PM
- *  * Copyright (c) 2021 . All rights reserved.
- *  * Last modified 11/9/21 10:34 PM
- *
- */
-
 package com.nammaev.data.network.http
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
@@ -25,15 +17,6 @@ private class HttpClientManagerImpl() : HttpClientManager {
         OkHttpClient.Builder().apply {
             if (BuildConfig.DEBUG) {
                 addNetworkInterceptor(StethoInterceptor())
-                addInterceptor {
-                    it.proceed(
-                        it.request().newBuilder().addHeader(
-                            Extras.AUTHORIZATION,
-                            "CIGfMA0GCSqGSIb3DQEBAQdqDup1pgSc0tQUMQUAA4GNADCBiQKBgQD3apAg6H2i"
-                        )
-                            .build()
-                    )
-                }
                 addInterceptor(
                     HttpLoggingInterceptor().apply {
                         this.level = HttpLoggingInterceptor.Level.BODY

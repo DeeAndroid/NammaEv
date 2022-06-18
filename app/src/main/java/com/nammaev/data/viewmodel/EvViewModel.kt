@@ -10,9 +10,7 @@ package com.nammaev.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nammaev.data.network.api.response.ResProduct
-import com.nammaev.data.network.api.response.ResStation
-import com.nammaev.data.network.api.response.ResUser
+import com.nammaev.data.network.api.response.*
 import com.nammaev.data.repository.EvRepository
 import com.nammaev.di.utility.Resource
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +28,9 @@ class EvViewModel(private val repository: EvRepository) : ViewModel() {
 
     private val _responseProduct: MutableStateFlow<Resource<ResProduct>> = MutableStateFlow(Resource.Loading)
     val responseProduct: Flow<Resource<ResProduct>> get() = _responseProduct
+
+    private val _addRating: MutableStateFlow<Resource<ResAddRating>> = MutableStateFlow(Resource.Loading)
+    val addRating: Flow<Resource<ResAddRating>> get() = _addRating
 
     fun getUser() {
         viewModelScope.launch {
@@ -52,6 +53,11 @@ class EvViewModel(private val repository: EvRepository) : ViewModel() {
         }
     }
 
-
+    fun addRating(addRatingRequestBody: AddRatingRequestBody) {
+        viewModelScope.launch {
+            _addRating.value = Resource.Loading
+            _addRating.value = repository.addRating(addRatingRequestBody)
+        }
+    }
 
 }

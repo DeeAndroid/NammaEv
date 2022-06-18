@@ -8,13 +8,14 @@
 
 package com.nammaev.data.network.api.service
 
-import com.nammaev.data.network.api.response.ResProduct
-import com.nammaev.data.network.api.response.ResStation
-import com.nammaev.data.network.api.response.ResUser
+import com.nammaev.data.network.api.response.*
+import com.nammaev.di.utility.API.ADD_RATING
 import com.nammaev.di.utility.API.STATIONS
 import com.nammaev.di.utility.API.URL_PRODUCT
 import com.nammaev.di.utility.API.URL_USER
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface ServiceApi {
 
@@ -26,5 +27,8 @@ interface ServiceApi {
 
     @GET(URL_PRODUCT)
     suspend fun getProducts(): ResProduct
+
+    @POST(ADD_RATING)
+    suspend fun addRating(@Body addRatingRequestBody: AddRatingRequestBody): ResAddRating
 
 }
