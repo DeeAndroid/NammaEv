@@ -26,4 +26,5 @@
     <string name="action_rate">Rate</string>
     <string name="hint_type_here">Type here</string>
     <string name="action_buy">Buy</string>
+    <string name="label_discharging">Discharing</string>
 </resources>

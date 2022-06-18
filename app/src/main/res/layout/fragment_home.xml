@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".30" />
+            app:layout_constraintGuide_percent=".40" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvScooter"
@@ -75,23 +75,24 @@
             android:drawableStart="@drawable/ic_discharge"
             android:drawablePadding="@dimen/spacing_tiny"
             android:drawableTint="@color/black"
+            android:text="@string/label_discharging"
             android:textSize="@dimen/size_14"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvScooterName"
-            tools:text="Discharging" />
+            app:layout_constraintTop_toBottomOf="@+id/tvScooterName" />
 
         <ProgressBar
             android:id="@+id/pbBattery"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_96sdp"
+            android:layout_height="@dimen/_106sdp"
             android:layout_marginHorizontal="@dimen/spacing_normal"
             android:layout_marginVertical="@dimen/spacing_small"
             android:background="@drawable/progress_bg"
             android:orientation="horizontal"
-            android:progress="66"
+            android:progress="@{userData.health}"
             android:progressDrawable="@drawable/progress_drawable"
-            app:layout_constraintTop_toBottomOf="@+id/tvBattery" />
+            app:layout_constraintTop_toBottomOf="@+id/tvBattery"
+            tools:progress="66" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvBatteryPercent"
@@ -102,7 +103,8 @@
             app:layout_constraintEnd_toEndOf="@+id/pbBattery"
             app:layout_constraintStart_toStartOf="@+id/pbBattery"
             app:layout_constraintTop_toTopOf="@+id/pbBattery"
-            app:textValueWithPercent="@{userData.health}"
+            app:range="@{userData.range}"
+            app:textValueWithPercent="@{String.valueOf(userData.health)}"
             tools:text="66 %" />
 
         <com.google.android.material.card.MaterialCardView

@@ -13,7 +13,7 @@ data class ResUserData(
     val rideStateFromLastCharge: String = "",
     val lastCharge: String = "",
     val name: String = "",
-    val health: String = "",
+    val health: Int = 0,
     val range: String = "",
     @SerializedName("_id") val id: String? = null,
     val vehicle: String = ""

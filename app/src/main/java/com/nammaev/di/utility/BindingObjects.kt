@@ -12,6 +12,12 @@ object BindingObjects {
     }
 
     @JvmStatic
+    @BindingAdapter("textValueWithPercent", "range")
+    fun textValueWithPercent(textView: TextView, value: String, range: String) {
+        textView.text = "$value % with $range Km range"
+    }
+
+    @JvmStatic
     @BindingAdapter("textValueWithPercent")
     fun textValueWithPercent(textView: TextView, value: String) {
         textView.text = "$value %"
