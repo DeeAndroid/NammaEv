@@ -19,8 +19,7 @@ import com.nammaev.di.getCompatColor
 
 typealias myService = (Boolean, Services) -> Unit
 
-class EvPartsAdapter(val myService: myService) :
-    RecyclerView.Adapter<EvPartsAdapter.CategoryHolder>() {
+class EvPartsAdapter(val myService: myService) : RecyclerView.Adapter<EvPartsAdapter.CategoryHolder>() {
 
     val serviceList = mutableListOf<Services>()
 

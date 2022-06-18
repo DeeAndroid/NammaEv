@@ -1,13 +1,11 @@
 package com.nammaev.ui.view.nearby.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.nammaev.R
+import com.nammaev.databinding.ItemNearbyUserBinding
 import com.nammaev.ui.view.nearby.data.MarkerData
-import kotlin.collections.ArrayList
 
 class StationsAdapter() : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
     var modelArrayList: ArrayList<MarkerData> = ArrayList<MarkerData>()
@@ -15,11 +13,13 @@ class StationsAdapter() : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): StationsAdapter.ViewHolder {
-        val itemView: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_nearby_user, parent, false)
-        return ViewHolder(itemView)
-    }
+    ) = ViewHolder(
+        ItemNearbyUserBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+    )
 
 
     override fun onBindViewHolder(holder: StationsAdapter.ViewHolder, position: Int) {
@@ -44,17 +44,19 @@ class StationsAdapter() : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
     }
 
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(val binding: ItemNearbyUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private var selected = false
         fun bindUI(position: Int, list: ArrayList<MarkerData>) {
 
-            itemView.tv_title.text=list[position].snippets
-            Glide.with(itemView.user_cover.context)
-                .load(list[position].avatar)
-                .circleCrop()
-                .into(itemView.user_cover)
+            binding.apply {
+                tvTitle.text = list[position].snippets
+                Glide.with(userCover.context)
+                    .load(list[position].avatar)
+                    .circleCrop()
+                    .into(userCover)
+            }
         }
-
     }
 
 }

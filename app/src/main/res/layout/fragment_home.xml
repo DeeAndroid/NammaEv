@@ -6,4 +6,82 @@
     android:layout_height="match_parent"
     tools:context="com.nammaev.ui.view.home.HomeFragment">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivMyScotter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_home"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvScooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textSize="@dimen/size_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivMyScotter"
+        tools:text="Your Scooter" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvScooterName"
+        style="@style/TitleTextView"
+        android:textSize="@dimen/size_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvScooter"
+        tools:text="Your Scooter" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:cardBackgroundColor="@color/light_black"
+        app:cardCornerRadius="@dimen/spacing_small"
+        app:layout_constraintTop_toBottomOf="@id/tvScooterName">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/spacing_small">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBattery"
+                style="@style/TitleTextView"
+                android:text="@string/label_battery_energy"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/pbBattery"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_126sdp"
+                android:layout_marginVertical="@dimen/spacing_small"
+                android:background="@drawable/progress_bg"
+                android:orientation="horizontal"
+                android:progress="66"
+                android:progressDrawable="@drawable/progress_drawable"
+                app:layout_constraintTop_toBottomOf="@+id/tvBattery" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBatteryPercent"
+                style="@style/TitleTextView"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_26"
+                app:layout_constraintBottom_toBottomOf="@+id/pbBattery"
+                app:layout_constraintEnd_toEndOf="@+id/pbBattery"
+                app:layout_constraintStart_toStartOf="@+id/pbBattery"
+                app:layout_constraintTop_toTopOf="@+id/pbBattery"
+                tools:text="66 %" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

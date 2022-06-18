@@ -7,4 +7,5 @@
     <string name="action_added">Added</string>
     <string name="action_add">Add</string>
     <string name="label_choose_parts">Choose Parts</string>
+    <string name="label_battery_energy">Battery Energy</string>
 </resources>

@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
-import com.nammaev.data.network.api.response.Services
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentHomeBinding
 import com.nammaev.di.utility.Resource
@@ -25,7 +24,6 @@ class HomeFragment : Fragment(), LifecycleObserver {
 
     private val homeViewModel by sharedViewModel<EvViewModel>()
     private var binding: FragmentHomeBinding? = null
-    private val serviceList = mutableListOf<Services>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -36,11 +34,6 @@ class HomeFragment : Fragment(), LifecycleObserver {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.apply {
-
-        }
-
-        //  getServices()  //  Both Works
         homeViewModel.getServices()
         listenForData()
     }

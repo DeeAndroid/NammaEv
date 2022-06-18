@@ -12,7 +12,7 @@
         <scale android:scaleWidth="100%" android:useIntrinsicSizeAsMinimum="true">
             <shape>
                 <corners android:radius="@dimen/_25sdp" />
-                <solid android:color="@color/white" />
+                <solid android:color="@color/teal_200" />
             </shape>
         </scale>
     </item>

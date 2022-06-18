@@ -39,7 +39,7 @@ class PartsFragment : Fragment(), LifecycleObserver {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-            rvService.adapter = MyServiceAdapter { isAdded, service ->
+            rvService.adapter = EvPartsAdapter { isAdded, service ->
                 if (isAdded)
                     serviceList.add(service)
                 else
@@ -58,7 +58,7 @@ class PartsFragment : Fragment(), LifecycleObserver {
                 is Resource.Success -> {
                     resService.value.data?.let {
                         if (!it.services.isNullOrEmpty())
-                            (binding?.rvService?.adapter as MyServiceAdapter).addServiceList(it.services as List<Services>)
+                            (binding?.rvService?.adapter as EvPartsAdapter).addServiceList(it.services as List<Services>)
                         else
                             context?.toast(getString(R.string.label_no_parts))
                     }
