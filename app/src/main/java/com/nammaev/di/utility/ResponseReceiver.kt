@@ -8,6 +8,7 @@
 
 package com.nammaev.di.utility
 
+import com.nammaev.di.utility.Constants.ERROR_MSG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -22,7 +23,7 @@ interface ResponseReceiver {
                     is HttpException -> {
                         Resource.Failure(false, throwable.code(), throwable.message().toString())
                     }
-                    else -> Resource.Failure(true, null, null)
+                    else -> Resource.Failure(true, null, throwable.message.toString())
                 }
             }
         }

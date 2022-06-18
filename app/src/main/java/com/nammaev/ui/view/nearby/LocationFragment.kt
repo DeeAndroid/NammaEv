@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -22,7 +23,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide.with
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -31,34 +31,44 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.nammaev.R
+import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentLocationBinding
+import com.nammaev.di.isSuccess
+import com.nammaev.di.showToast
+import com.nammaev.di.utility.Resource
+import com.nammaev.ui.MainActivity
 import com.nammaev.ui.view.nearby.data.MarkerData
 import com.nammaev.ui.view.nearby.interfaces.OnStationClicked
+import com.nammaev.ui.view.nearby.utils.AnimationUtils
+import com.nammaev.ui.view.nearby.utils.MapUtils.getOriginDestinationMarkerBitmap
 import kotlinx.coroutines.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
 
     private var binding: FragmentLocationBinding? = null
+    private val viewModel by sharedViewModel<EvViewModel>()
 
     var mGoogleMap: GoogleMap? = null
     var mLocationRequest: LocationRequest? = null
     var mLastLocation: Location? = null
     var mCurrLocationMarker: Marker? = null
     var mFusedLocationClient: FusedLocationProviderClient? = null
-    val markersArray: ArrayList<MarkerData> = ArrayList<MarkerData>()
+    var markersArray: MutableList<MarkerData> = ArrayList<MarkerData>()
     var mapmarker: Bitmap? = null
     val hashMapMarker: HashMap<Int, Marker> = HashMap()
     val userOnMapListAdapter = StationsAdapter(this)
 
     var marker_for_map: Marker? = null
     var isMapInitiated = false
-    var isMapvisble = true
-    var islistvisble = false
-    fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+    var latLng: LatLng? = null
+    private var originMarker: Marker? = null
+    private var destinationMarker: Marker? = null
+    private var grayPolyline: Polyline? = null
+    private var blackPolyline: Polyline? = null
+    fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 
     override fun onCreateView(
@@ -77,34 +87,50 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
         fragmentTransaction.commit()
         mapFrag.getMapAsync(this)
 
-
+        viewModel.getStations()
+        listenForData()
         markersArray.add(
             MarkerData(
-                13.0504068,
-                77.7567698,
-                "https://nammaev.testzy.tech/assets/home.png",
-                "0",
-                false
-            )
-        );
-        markersArray.add(
-            MarkerData(
-                13.047439,
-                77.755986,
-                "https://nammaev.testzy.tech/assets/power.png",
-                "1",
-                false
-            )
-        );
-        markersArray.add(
-            MarkerData(
-                13.047867,
-                77.749581,
-                "https://nammaev.testzy.tech/assets/repair.png",
-                "2",
+                13.050417,
+                77.7574288,
+                "https://png.pngitem.com/pimgs/s/49-497522_transparent-guy-thinking-png-random-guy-cartoon-png.png",
                 false
             )
         )
+        markersArray.add(
+            MarkerData(
+                11.161775,
+                77.3562897,
+                "https://png.pngitem.com/pimgs/s/49-497669_weegeepedia-cartoon-hd-png-download.png",
+                false
+            )
+        )
+        markersArray.add(
+            MarkerData(
+                11.1699052,
+                77.36545976,
+                "https://png.pngitem.com/pimgs/s/49-497724_simple-guy-skills-simple-guy-hd-png-download.png",
+                false
+            )
+        )
+        markersArray.add(
+            MarkerData(
+                11.1499602,
+                77.3753476,
+                "https://png.pngitem.com/pimgs/s/49-497810_random-scientist-guy-cartoon-hd-png-download.png",
+                false
+            )
+        )
+        markersArray.add(
+            MarkerData(
+                11.1797052,
+                77.3852376,
+                "https://png.pngitem.com/pimgs/s/49-498069_talk-about-random-wiki-shy-guy-mario-hd.png",
+                false
+            )
+        )
+
+
 
         binding?.apply {
 
@@ -112,7 +138,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
             userOnMapListAdapter.setModelArrayList(markersArray)
 
             userList.addOnItemChangedListener { _, adapterPosition ->
-                marker_for_map?.showInfoWindow();
+                marker_for_map?.showInfoWindow()
                 mGoogleMap?.animateCamera(
                     CameraUpdateFactory.newLatLng(
                         LatLng(
@@ -120,7 +146,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                             markersArray[adapterPosition].longitude
                         )
                     ), 250, null
-                );
+                )
                 if (isMapInitiated) setMarkerColor(adapterPosition)
 
             }
@@ -160,6 +186,43 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
         return binding?.root
     }
 
+    private fun listenForData() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.stationResponseLiveData.collect { resUser ->
+                when (resUser) {
+                    is Resource.Loading -> (activity as MainActivity).blockInput()
+                    is Resource.Success -> {
+                        if (resUser.value.code?.isSuccess()!!) {
+
+                            resUser.value.resStation?.forEachIndexed { index, resStationItem ->
+
+                                markersArray.add(
+                                    index, MarkerData(
+
+                                        resStationItem?.location?.lat?.toDouble()!!,
+                                        resStationItem.location.lng?.toDouble()!!,
+                                        resStationItem.avatar.toString(),
+                                        false
+
+                                    )
+                                )
+
+
+                            }
+
+                        } else
+                            requireActivity() showToast resUser.value.message.toString()
+                        (activity as MainActivity).unblockInput()
+                    }
+                    is Resource.Failure -> {
+                        requireActivity() showToast resUser.errorBody
+                        (activity as MainActivity).unblockInput()
+                    }
+                }
+            }
+        }
+    }
+
 
     var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -173,15 +236,17 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                 }
 
                 //move map camera
-                val latLng = LatLng(location.latitude, location.longitude)
+                latLng = LatLng(location.latitude, location.longitude)
                 val cameraPosition =
-                    CameraPosition.Builder().target(LatLng(latLng.latitude, latLng.longitude))
+                    CameraPosition.Builder().target(LatLng(latLng?.latitude!!, latLng?.longitude!!))
                         .zoom(16f).build()
                 mGoogleMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                binding?.viewAddStation?.etAddress?.text= getCompleteAddress(latLng.latitude, latLng.longitude).trim().toEditable()
+                binding?.viewAddStation?.etAddress?.text =
+                    getCompleteAddress(latLng?.latitude!!, latLng?.longitude!!).trim().toEditable()
             }
         }
     }
+
     private fun getCompleteAddress(LATITUDE: Double, LONGITUDE: Double): String {
         var strAdd = ""
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
@@ -220,7 +285,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                         markersArray[i].lattitude,
                         markersArray[i].longitude,
                         markersArray[i].avatar,
-                        markersArray[i].snippets,
                         false
                     )
                 )
@@ -231,7 +295,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
                         markersArray[position].lattitude,
                         markersArray[position].longitude,
                         markersArray[position].avatar,
-                        markersArray[position].snippets,
                         true
                     )
                 )
@@ -391,8 +454,65 @@ class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
         }
     }
 
-    override fun onStationClicked(id: String) {
-        findNavController().navigate(R.id.stationDetailsDialogFragment)
+    override fun onStationClicked(id: MarkerData, position: Int) {
+        StationDetailsDialogFragment.showAddressBottomSheet(childFragmentManager, position) {
+            val paths: MutableList<LatLng> = ArrayList<LatLng>()
+            paths.add(0, latLng!!)
+            paths.add(1, LatLng(markersArray[position].lattitude, markersArray[position].longitude))
+
+            showPath(mutableListOf(
+                LatLng(
+                    latLng!!.latitude,
+                    latLng!!.longitude
+                ),
+                LatLng(
+                    markersArray[position].lattitude,
+                    markersArray[position].longitude
+                )
+            ))
+        }
+    }
+
+
+    private fun showPath(latLngList: MutableList<LatLng>) {
+        val builder = LatLngBounds.Builder()
+        for (latLng in latLngList) {
+            builder.include(latLng)
+        }
+        val bounds = builder.build()
+        mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 2))
+
+        val polylineOptions = PolylineOptions()
+        polylineOptions.color(Color.GRAY)
+        polylineOptions.width(5f)
+        polylineOptions.addAll(latLngList)
+        grayPolyline = mGoogleMap?.addPolyline(polylineOptions)
+
+        val blackPolylineOptions = PolylineOptions()
+        blackPolylineOptions.color(Color.BLACK)
+        blackPolylineOptions.width(5f)
+        blackPolyline = mGoogleMap?.addPolyline(blackPolylineOptions)
+
+        originMarker = addOriginDestinationMarkerAndGet(latLngList[0])
+        originMarker?.setAnchor(0.5f, 0.5f)
+        destinationMarker = addOriginDestinationMarkerAndGet(latLngList[latLngList.size - 1])
+        destinationMarker?.setAnchor(0.5f, 0.5f)
+
+        val polylineAnimator = AnimationUtils.polylineAnimator()
+        polylineAnimator.addUpdateListener { valueAnimator ->
+            val percentValue = (valueAnimator.animatedValue as Int)
+            val index = (grayPolyline?.points!!.size) * (percentValue / 100.0f).toInt()
+            blackPolyline?.points = grayPolyline?.points!!.subList(0, index)
+        }
+        polylineAnimator.start()
+    }
+
+    private fun addOriginDestinationMarkerAndGet(latLng: LatLng): Marker {
+        val bitmapDescriptor =
+            BitmapDescriptorFactory.fromBitmap(getOriginDestinationMarkerBitmap())
+        return mGoogleMap?.addMarker(
+            MarkerOptions().position(latLng).flat(true).icon(bitmapDescriptor)
+        )!!
     }
 
 }
@@ -424,7 +544,7 @@ private class CustomMarkerView(
                     context,
                     R.drawable.circle_bg_map_bw
                 )
-            );
+            )
 //            user_image.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f)})
 
         }
@@ -444,7 +564,6 @@ private class CustomMarkerView(
 
             }.await()
         }
-        Log.d("TAG", "setImages: $bitmap")
         return bitmap
     }
 

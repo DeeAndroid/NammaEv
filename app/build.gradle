@@ -16,7 +16,7 @@ android {
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
-        buildConfigField 'String', 'BASE_URL', '"http://google.com/api/"'
+        buildConfigField 'String', 'BASE_URL', '"https://namma-ev.herokuapp.com/"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,7 +35,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        //dataBinding true
+        dataBinding true
     }
 }
 

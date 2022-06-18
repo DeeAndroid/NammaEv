@@ -1,213 +1,222 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.nammaev.ui.view.home.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <data>
+
+        <variable
+            name="userData"
+            type="com.nammaev.data.network.api.response.ResUserData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/spacing_large"
-        android:src="@drawable/corner_bg"
-        app:layout_constraintBottom_toBottomOf="@+id/ivMyScotter"
-        app:layout_constraintTop_toTopOf="@id/ivMyScotter" />
+        android:layout_height="match_parent"
+        tools:context="com.nammaev.ui.view.home.HomeFragment">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivMyScotter"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:src="@drawable/scooter"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".40" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvScooter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:textSize="@dimen/size_12"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivMyScotter"
-        tools:text="Your Scooter" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvScooterName"
-        style="@style/TitleTextView"
-        android:textSize="@dimen/_38ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvScooter"
-        tools:text="Your Scooter" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvBattery"
-        style="@style/TitleTextView"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:text="@string/label_battery_energy"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvScooterName" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvBatteryStatus"
-        style="@style/TitleTextView"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginEnd="@dimen/spacing_normal"
-        android:drawableTint="@color/black"
-        android:drawableStart="@drawable/ic_discharge"
-        android:drawablePadding="@dimen/spacing_tiny"
-        android:textSize="@dimen/size_14"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvScooterName"
-        tools:text="Discharging" />
-
-    <ProgressBar
-        android:id="@+id/pbBattery"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_106sdp"
-        android:layout_marginHorizontal="@dimen/spacing_normal"
-        android:layout_marginVertical="@dimen/spacing_small"
-        android:background="@drawable/progress_bg"
-        android:orientation="horizontal"
-        android:progress="66"
-        android:progressDrawable="@drawable/progress_drawable"
-        app:layout_constraintTop_toBottomOf="@+id/tvBattery" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvBatteryPercent"
-        style="@style/TitleTextView"
-        android:textColor="@color/white"
-        android:textSize="@dimen/size_26"
-        app:layout_constraintBottom_toBottomOf="@+id/pbBattery"
-        app:layout_constraintEnd_toEndOf="@+id/pbBattery"
-        app:layout_constraintStart_toStartOf="@+id/pbBattery"
-        app:layout_constraintTop_toTopOf="@+id/pbBattery"
-        tools:text="66 %" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvLastCharge"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:elevation="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/spacing_normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cvDistance"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbBattery"
->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:src="@drawable/corner_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMyScotter"
+            app:layout_constraintTop_toTopOf="@id/ivMyScotter" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvChargeStation"
-                style="@style/TitleTextView"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:text="@string/label_last_charged_to"
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_12"
-                app:layout_constraintBottom_toTopOf="@+id/tvBatteryLastCharge"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvBatteryLastCharge"
-                style="@style/TitleTextView"
-                android:drawableStart="@drawable/ic_discharge"
-                android:drawablePadding="@dimen/spacing_tiny"
-                android:drawableTint="@color/black"
-                android:textSize="@dimen/_38ssp"
-                app:layout_constraintBottom_toTopOf="@+id/tvChargingStation"
-                app:layout_constraintStart_toStartOf="@+id/tvChargeStation"
-                app:layout_constraintTop_toBottomOf="@+id/tvChargeStation"
-                tools:text="66%" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvChargingStation"
-                style="@style/TitleTextView"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBatteryLastCharge"
-                tools:text="at Home Station" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvDistance"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_small"
-        app:layout_constraintBottom_toBottomOf="@+id/cvLastCharge"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="@dimen/_5sdp"
-        app:layout_constraintStart_toEndOf="@+id/cvLastCharge"
-        app:layout_constraintTop_toTopOf="@+id/cvLastCharge"
-      >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivMyScotter"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:src="@drawable/scooter"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLastCharge"
-                style="@style/TitleTextView"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:text="@string/label_distance_travelled"
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_12"
-                app:layout_constraintBottom_toTopOf="@+id/tvLastChargeDistance"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".30" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLastChargeDistance"
-                style="@style/TitleTextView"
-                android:layout_height="0dp"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:drawableStart="@drawable/ic_location"
-                android:drawablePadding="@dimen/spacing_tiny"
-                android:drawableTint="@color/black"
-                android:textSize="@dimen/_38ssp"
-                app:layout_constraintBottom_toTopOf="@+id/tvDistFromStation"
-                app:layout_constraintStart_toStartOf="@+id/tvLastCharge"
-                app:layout_constraintTop_toBottomOf="@+id/tvLastCharge"
-                tools:text="44 Km" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvScooter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:textSize="@dimen/size_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivMyScotter"
+            tools:text="Your Scooter" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDistFromStation"
-                style="@style/TitleTextView"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:text="@string/label_since_last_charge"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLastChargeDistance" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvScooterName"
+            style="@style/TitleTextView"
+            android:text="@{userData.name}"
+            android:textSize="@dimen/_38ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvScooter"
+            tools:text="Your Scooter" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBattery"
+            style="@style/TitleTextView"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:text="@string/label_battery_energy"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvScooterName" />
 
-    </com.google.android.material.card.MaterialCardView>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBatteryStatus"
+            style="@style/TitleTextView"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:drawableStart="@drawable/ic_discharge"
+            android:drawablePadding="@dimen/spacing_tiny"
+            android:drawableTint="@color/black"
+            android:textSize="@dimen/size_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvScooterName"
+            tools:text="Discharging" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/pbBattery"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_96sdp"
+            android:layout_marginHorizontal="@dimen/spacing_normal"
+            android:layout_marginVertical="@dimen/spacing_small"
+            android:background="@drawable/progress_bg"
+            android:orientation="horizontal"
+            android:progress="66"
+            android:progressDrawable="@drawable/progress_drawable"
+            app:layout_constraintTop_toBottomOf="@+id/tvBattery" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBatteryPercent"
+            style="@style/TitleTextView"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_26"
+            app:layout_constraintBottom_toBottomOf="@+id/pbBattery"
+            app:layout_constraintEnd_toEndOf="@+id/pbBattery"
+            app:layout_constraintStart_toStartOf="@+id/pbBattery"
+            app:layout_constraintTop_toTopOf="@+id/pbBattery"
+            app:textValueWithPercent="@{userData.health}"
+            tools:text="66 %" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvLastCharge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:elevation="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cvDistance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pbBattery">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChargeStation"
+                    style="@style/TitleTextView"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@string/label_last_charged_to"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_12"
+                    app:layout_constraintBottom_toTopOf="@+id/tvBatteryLastCharge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBatteryLastCharge"
+                    style="@style/TitleTextView"
+                    android:drawableStart="@drawable/ic_discharge"
+                    android:drawablePadding="@dimen/spacing_tiny"
+                    android:drawableTint="@color/black"
+                    android:textSize="@dimen/_38ssp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvChargingStation"
+                    app:layout_constraintStart_toStartOf="@+id/tvChargeStation"
+                    app:layout_constraintTop_toBottomOf="@+id/tvChargeStation"
+                    app:textValueWithPercent="@{userData.lastCharge}"
+                    tools:text="66%" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChargingStation"
+                    style="@style/TitleTextView"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBatteryLastCharge"
+                    app:textValue="@{userData.lastChargeLocation}"
+                    tools:text="at Home Station" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvDistance"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:elevation="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/cvLastCharge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cvLastCharge"
+            app:layout_constraintTop_toTopOf="@+id/cvLastCharge">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLastCharge"
+                    style="@style/TitleTextView"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@string/label_distance_travelled"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_12"
+                    app:layout_constraintBottom_toTopOf="@+id/tvLastChargeDistance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLastChargeDistance"
+                    style="@style/TitleTextView"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:drawableStart="@drawable/ic_location"
+                    android:drawablePadding="@dimen/spacing_tiny"
+                    android:drawableTint="@color/black"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_38ssp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvDistFromStation"
+                    app:layout_constraintStart_toStartOf="@+id/tvLastCharge"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLastCharge"
+                    app:textValueWithKm="@{userData.rideStateFromLastCharge}"
+                    tools:text="44 Km" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDistFromStation"
+                    style="@style/TitleTextView"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:text="@string/label_since_last_charge"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLastChargeDistance" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

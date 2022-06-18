@@ -13,15 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.nammaev.R
-import com.nammaev.data.network.api.response.Services
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentPartsBinding
-import com.nammaev.di.toast
-import com.nammaev.di.utility.Resource
-import com.nammaev.ui.MainActivity
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class PartsFragment : Fragment() {
@@ -41,41 +34,41 @@ class PartsFragment : Fragment() {
         binding?.apply {
             rvParts.adapter = EvPartsAdapter { service ->
                 AddressBottomSheetDialog.showAddressBottomSheet(childFragmentManager) { address ->
-                    
+
                 }
             }
         }
 
-        homeViewModel.getServices()
+//        homeViewModel.getServices()
         listenForData()
     }
 
     private fun listenForData() {
-        lifecycleScope.launchWhenCreated {
-            homeViewModel.responseLiveData.collect { resService ->
-                when (resService) {
-                    is Resource.Loading -> (activity as MainActivity).blockInput()
-                    is Resource.Success -> {
-                        resService.value.data?.let {
-                            binding?.apply {
-                                if (!it.services.isNullOrEmpty()) {
-                                    (rvParts.adapter as EvPartsAdapter).addServiceList(it.services as List<Services>)
-                                    tvNoParts.visibility = View.GONE
-                                } else {
-                                    tvNoParts.visibility = View.VISIBLE
-                                    context?.toast(getString(R.string.label_no_parts))
-                                }
-                            }
-                        }
-                        (activity as MainActivity).unblockInput()
-                    }
-                    is Resource.Failure -> {
-                        binding?.tvNoParts?.visibility = View.VISIBLE
-                        (activity as MainActivity).unblockInput()
-                    }
-                }
-            }
-        }
+        /* lifecycleScope.launchWhenCreated {
+             homeViewModel.responseLiveData.collect { resService ->
+                 when (resService) {
+                     is Resource.Loading -> (activity as MainActivity).blockInput()
+                     is Resource.Success -> {
+                         resService.value.data?.let {
+                             binding?.apply {
+                                 if (!it.services.isNullOrEmpty()) {
+                                     (rvParts.adapter as EvPartsAdapter).addServiceList(it.services as List<Services>)
+                                     tvNoParts.visibility = View.GONE
+                                 } else {
+                                     tvNoParts.visibility = View.VISIBLE
+                                     context?.toast(getString(R.string.label_no_parts))
+                                 }
+                             }
+                         }
+                         (activity as MainActivity).unblockInput()
+                     }
+                     is Resource.Failure -> {
+                         binding?.tvNoParts?.visibility = View.VISIBLE
+                         (activity as MainActivity).unblockInput()
+                     }
+                 }
+             }
+         }*/
     }
 
 }

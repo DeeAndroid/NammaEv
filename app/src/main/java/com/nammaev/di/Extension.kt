@@ -29,7 +29,7 @@ import com.nammaev.utils.CrossFadeDrawable
 fun View.getCompatColor(@ColorRes colorRes: Int): Int =
     ContextCompat.getColor(this.context, colorRes)
 
-infix fun Context.toast(message: String) {
+infix fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
@@ -82,3 +82,5 @@ infix fun Activity.unblockInput(progressBar: ProgressBar?) {
 fun String.isSuccess(): Boolean = this == "1"
 
 fun String.isFailure(): Boolean = this == "failure"
+
+fun Int?.isSuccess(): Boolean = this != null && this == 200

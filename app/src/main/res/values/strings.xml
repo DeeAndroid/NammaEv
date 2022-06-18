@@ -23,4 +23,7 @@
     <string name="label_no_parts_available">No parts available</string>
     <string name="symbol_rupee">₹</string>
     <string name="label_enter_address">Enter your address or choose on map</string>
+    <string name="action_rate">Rate</string>
+    <string name="hint_type_here">Type here</string>
+    <string name="action_buy">Buy</string>
 </resources>

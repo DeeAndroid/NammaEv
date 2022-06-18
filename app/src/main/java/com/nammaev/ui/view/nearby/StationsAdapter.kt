@@ -51,14 +51,13 @@ class StationsAdapter(var onStationClicked: OnStationClicked) : RecyclerView.Ada
         fun bindUI(position: Int, list: ArrayList<MarkerData>, onStationClicked: OnStationClicked) {
 
             binding.apply {
-                tvTitle.text = list[position].snippets
                 Glide.with(userCover.context)
                     .load(list[position].avatar)
                     .circleCrop()
                     .into(userCover)
 
                 binding.parent.setOnClickListener {
-                    onStationClicked.onStationClicked(list[position].avatar)
+                    onStationClicked.onStationClicked(list[position],position)
                 }
 
             }

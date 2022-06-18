@@ -3,6 +3,5 @@ data class MarkerData(
     val lattitude: Double,
     val longitude: Double,
     val avatar: String,
-    val snippets: String,
     val selected:Boolean=false
 )

@@ -9,17 +9,19 @@
 package com.nammaev.data.network.api.service
 
 import com.nammaev.data.network.api.response.ResServices
-import com.nammaev.di.utility.API.URL_REQUEST
+import com.nammaev.data.network.api.response.ResStation
+import com.nammaev.data.network.api.response.ResUser
+import com.nammaev.di.utility.API.STATIONS
+import com.nammaev.di.utility.API.URL_USER
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface ServiceApi {
 
-    @GET(URL_REQUEST)
-    suspend fun getServices(
-//        @Header(AUTHORIZATION) auth: String = "CIGfMA0GCSqGSIb3DQEBAQdqDup1pgSc0tQUMQUAA4GNADCBiQKBgQD3apAg6H2i",
-    ): Response<ResServices>
+    @GET(URL_USER)
+    suspend fun getUser(): ResUser
 
-    @GET(URL_REQUEST)
-    suspend fun getService(): ResServices
+    @GET(STATIONS)
+    suspend fun getStations():ResStation
+
 }

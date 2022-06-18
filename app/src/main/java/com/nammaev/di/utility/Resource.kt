@@ -15,7 +15,7 @@ sealed class Resource<out T> {
     data class Failure(
         val isNetworkError: Boolean,
         val errorCode: Int?,
-        val errorBody: String?
+        val errorBody: String = ""
     ) : Resource<Nothing>()
 
     object Loading : Resource<Nothing>()

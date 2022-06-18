@@ -13,7 +13,9 @@ import com.nammaev.di.utility.ResponseReceiver
 
 class EvRepository(private val api: ServiceApi) : ResponseReceiver {
 
-    suspend fun getService() = callApi { api.getService() }
+    suspend fun getUser() = callApi { api.getUser() }
+
+    suspend fun getStations() = callApi { api.getStations() }
 
     companion object Factory {
         fun create(api: ServiceApi) = EvRepository(api)
