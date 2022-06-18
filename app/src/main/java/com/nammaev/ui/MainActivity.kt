@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.nammaev.R
 import com.nis.neum.R
 import com.nammaev.di.blockInput
 import com.nammaev.di.unblockInput

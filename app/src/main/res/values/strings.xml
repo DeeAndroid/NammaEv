@@ -7,4 +7,6 @@
     <string name="action_added">Added</string>
     <string name="action_add">Add</string>
     <string name="label_choose_services">Choose Services</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
