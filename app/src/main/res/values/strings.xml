@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">NammaEv</string>
+    <string name="label_home">Home</string>
+    <string name="label_air_conditioner">Air Conditioner</string>
+    <string name="action_pick_date_and_time">Proceed to Pick Date and Time</string>
+    <string name="label_no_parts">No parts is available</string>
+    <string name="action_added">Added</string>
+    <string name="action_add">Add</string>
+    <string name="label_choose_parts">Choose Parts</string>
+    <string name="label_battery_energy">Battery Energy</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_direction">Get Direction</string>
+    <string name="see_all_reviews_amp_ratings"><![CDATA[See all reviews & ratings]]></string>
+    <string name="label_last_charged_to">Last Charged to</string>
+    <string name="label_distance_travelled">Distance travelled</string>
+    <string name="label_since_last_charge">Since last charge</string>
+    <string name="label_pick_location">Pick Location of the station to add</string>
+    <string name="label_station">Station</string>
+    <string name="label_repair">Repair</string>
+    <string name="action_add_station">Add Station</string>
+    <string name="label_cost_per_hour_in_inr">Cost per Hour in INR</string>
+    <string name="label_station_type">Select Station Type</string>
+    <string name="label_no_parts_available">No parts available</string>
+    <string name="symbol_rupee">₹</string>
+    <string name="label_enter_address">Enter your address or choose on map</string>
+    <string name="action_rate">Rate</string>
+    <string name="hint_type_here">Type here</string>
+    <string name="action_buy">Buy</string>
+    <string name="label_discharging">Discharging</string>
+</resources>

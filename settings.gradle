@@ -1,0 +1,4 @@
+include ':app'
+include ':sdp-android'
+include ':ssp-android'
+rootProject.name = "NammaEv"

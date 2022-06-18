@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:src="@drawable/ic_outline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:drawableStart="@drawable/ic_location"
+        android:drawablePadding="@dimen/_8sdp"
+        android:letterSpacing="0.02"
+        android:text="@string/label_pick_location"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/close" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/label_station_type"
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+
+        <RadioButton
+            android:id="@+id/rbHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_home" />
+
+        <RadioButton
+            android:id="@+id/rbStation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:text="@string/label_station" />
+
+        <RadioButton
+            android:id="@+id/rbRepair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:text="@string/label_repair" />
+
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:id="@+id/group"
+        app:constraint_referenced_ids="tvTitlePrice, etPrice"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitlePrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/label_cost_per_hour_in_inr"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/tvTitlePrice" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:background="@drawable/round_white_bg"
+        android:backgroundTint="@color/teal_200"
+        android:text="@string/action_add_station"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/etPrice" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

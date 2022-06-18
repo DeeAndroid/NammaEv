@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/outline_mage"
+        android:src="@drawable/circle_bg_map"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_width="@dimen/_40sdp"/>
+
+    <ImageView
+        android:id="@+id/user_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/_22sdp"
+        android:layout_width="@dimen/_22sdp"/>
+    <ImageView
+        android:id="@+id/outline_overlay"
+        android:src="@drawable/circle_bg_map_overlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_width="@dimen/_24sdp"/>
+</merge>
+
