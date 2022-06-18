@@ -5,6 +5,10 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1495" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_parts.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_service.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/layout_user_item.xml" value="0.2361111111111111" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1495" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1495" />

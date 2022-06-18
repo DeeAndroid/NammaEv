@@ -30,9 +30,9 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.nammaev.ui.view.home.PartsFragment"
+        android:name="com.nammaev.ui.view.parts.PartsFragment"
         android:label="Select Service"
-        tools:layout="@layout/fragment_service" />
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.nammaev.ui.view.nearby.LocationFragment"

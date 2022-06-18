@@ -32,7 +32,6 @@ class SplashFragment : Fragment() {
             val action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
           //  action.setSafeArguments("Some Arguments here")
             findNavController().navigate(action)
-            //  findNavController().navigate(R.id.action_splashFragment_to_serviceFragment)
         }
     }
 
