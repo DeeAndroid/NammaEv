@@ -8,4 +8,8 @@
     <string name="action_add">Add</string>
     <string name="label_choose_parts">Choose Parts</string>
     <string name="label_battery_energy">Battery Energy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_direction">Get Direction</string>
+    <string name="see_all_reviews_amp_ratings"><![CDATA[See all reviews & ratings]]></string>
 </resources>

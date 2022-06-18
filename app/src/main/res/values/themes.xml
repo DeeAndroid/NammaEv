@@ -47,5 +47,8 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
-
+    <style name="RatingColor" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/light_black</item>
+        <item name="colorControlActivated">@color/teal_200</item>
+    </style>
 </resources>

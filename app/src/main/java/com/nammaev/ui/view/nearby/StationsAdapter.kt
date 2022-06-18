@@ -1,4 +1,4 @@
-package com.nammaev.ui.view.nearby.adapter
+package com.nammaev.ui.view.nearby
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nammaev.databinding.ItemNearbyUserBinding
 import com.nammaev.ui.view.nearby.data.MarkerData
+import com.nammaev.ui.view.nearby.interfaces.OnStationClicked
 
-class StationsAdapter() : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
+class StationsAdapter(var onStationClicked: OnStationClicked) : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
     var modelArrayList: ArrayList<MarkerData> = ArrayList<MarkerData>()
 
     override fun onCreateViewHolder(
@@ -22,8 +23,8 @@ class StationsAdapter() : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
     )
 
 
-    override fun onBindViewHolder(holder: StationsAdapter.ViewHolder, position: Int) {
-        holder.bindUI(position, modelArrayList)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindUI(position, modelArrayList,onStationClicked)
     }
 
     override fun getItemCount(): Int {
@@ -47,7 +48,7 @@ class StationsAdapter() : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemNearbyUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private var selected = false
-        fun bindUI(position: Int, list: ArrayList<MarkerData>) {
+        fun bindUI(position: Int, list: ArrayList<MarkerData>, onStationClicked: OnStationClicked) {
 
             binding.apply {
                 tvTitle.text = list[position].snippets
@@ -55,6 +56,11 @@ class StationsAdapter() : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
                     .load(list[position].avatar)
                     .circleCrop()
                     .into(userCover)
+
+                binding.parent.setOnClickListener {
+                    onStationClicked.onStationClicked(list[position].avatar)
+                }
+
             }
         }
     }

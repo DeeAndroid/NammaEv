@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide.with
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,12 +29,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.nammaev.R
 import com.nammaev.databinding.FragmentLocationBinding
-import com.nammaev.ui.view.nearby.adapter.StationsAdapter
 import com.nammaev.ui.view.nearby.data.MarkerData
+import com.nammaev.ui.view.nearby.interfaces.OnStationClicked
 import kotlinx.coroutines.*
 
 
-class LocationFragment : Fragment(), OnMapReadyCallback {
+class LocationFragment : Fragment(), OnMapReadyCallback, OnStationClicked {
 
     private var binding: FragmentLocationBinding? = null
 
@@ -45,7 +46,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     val markersArray: ArrayList<MarkerData> = ArrayList<MarkerData>()
     var mapmarker: Bitmap? = null
     val hashMapMarker: HashMap<Int, Marker> = HashMap()
-    val userOnMapListAdapter = StationsAdapter()
+    val userOnMapListAdapter = StationsAdapter(this)
 
     var marker_for_map: Marker? = null
     var isMapInitiated = false
@@ -74,7 +75,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             MarkerData(
                 13.0504068,
                 77.7567698,
-                "https://png.pngitem.com/pimgs/s/49-497522_transparent-guy-thinking-png-random-guy-cartoon-png.png",
+                "https://nammaev.testzy.tech/assets/home.png",
                 "0",
                 false
             )
@@ -83,7 +84,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             MarkerData(
                 13.047439,
                 77.755986,
-                "https://png.pngitem.com/pimgs/s/49-497669_weegeepedia-cartoon-hd-png-download.png",
+                "https://nammaev.testzy.tech/assets/power.png",
                 "1",
                 false
             )
@@ -92,7 +93,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             MarkerData(
                 13.047867,
                 77.749581,
-                "https://png.pngitem.com/pimgs/s/49-497724_simple-guy-skills-simple-guy-hd-png-download.png",
+                "https://nammaev.testzy.tech/assets/repair.png",
                 "2",
                 false
             )
@@ -152,7 +153,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         marker?.remove()
         hashMapMarker.remove(position)
 
-//        binding.userList.smoothScrollToPosition(position)
+        binding?.userList?.smoothScrollToPosition(position)
 
         for (i in markersArray.indices) {
             if (i != position) {
@@ -337,6 +338,10 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
             )
             mGoogleMap!!.isMyLocationEnabled = true
         }
+    }
+
+    override fun onStationClicked(id: String) {
+        findNavController().navigate(R.id.stationDetailsDialogFragment)
     }
 
 }

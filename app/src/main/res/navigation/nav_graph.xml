@@ -38,4 +38,10 @@
         android:name="com.nammaev.ui.view.nearby.LocationFragment"
         android:label="fragment_location"
         tools:layout="@layout/fragment_location" />
+    <dialog
+        android:id="@+id/stationDetailsDialogFragment"
+        android:name="com.nammaev.ui.view.nearby.StationDetailsDialogFragment"
+        android:label="fragment_station_details_dialog"
+        tools:layout="@layout/fragment_station_details_dialog" />
+
 </navigation>
