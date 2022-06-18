@@ -6,8 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.nammaev.R
 import androidx.navigation.ui.NavigationUI
+import com.nammaev.R
 import com.nammaev.di.blockInput
 import com.nammaev.di.unblockInput
 import com.nammaev.databinding.ActivityMainBinding as MainActivityBinding
@@ -25,27 +25,14 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-        when(controller.currentDestination?.id) {
-            R.id.splashFragment -> binding?.bottomNavHome!!.visibility=View.GONE
-           else -> binding?.bottomNavHome!!.visibility=View.VISIBLE
-
-        }
+            when (controller.currentDestination?.id) {
+                R.id.splashFragment -> binding?.bottomNavHome!!.visibility = View.GONE
+                else -> binding?.bottomNavHome!!.visibility = View.VISIBLE
+            }
         }
         NavigationUI.setupWithNavController(binding?.bottomNavHome!!, navController)   //  Navigation bar
 
     }
-
-    /*override fun onBackPressed() {
-        if (navController.currentDestination?.id != null) {
-            when (navController.currentDestination?.id) {
-                R.id.splashFragment -> {
-                    finish()
-                }
-                else -> navController.navigateUp()
-            }
-        } else
-            super.onBackPressed()
-    }*/
 
     fun blockInput() {
         blockInput(binding?.pbServices)

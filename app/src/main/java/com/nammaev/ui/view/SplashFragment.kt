@@ -25,12 +25,12 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = FragmentSplashBinding.inflate(inflater, container, false).root
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
         lifecycleScope.launch {
             delay(2000)
             val action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
-          //  action.setSafeArguments("Some Arguments here")
+            //  action.setSafeArguments("Some Arguments here")
             findNavController().navigate(action)
         }
     }
