@@ -97,6 +97,8 @@ dependencies {
     //google maps
     implementation 'com.google.maps.android:android-maps-utils:2.3.0'
 
+    //descrete scrollview
+    implementation'com.yarolegovich:discrete-scrollview:1.5.1'
 
     implementation project(path: ':sdp-android')
     implementation project(path: ':ssp-android')

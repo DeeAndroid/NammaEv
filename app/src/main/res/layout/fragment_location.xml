@@ -18,7 +18,18 @@
             android:layout_height="match_parent" />
 
 
-
+        <com.yarolegovich.discretescrollview.DiscreteScrollView
+            android:id="@+id/user_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:dsv_orientation="horizontal"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_24sdp"
+            tools:listitem="@layout/item_nearby_user"
+            />
 
 
 
