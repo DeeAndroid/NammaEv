@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_small"
-    tools:context="com.nis.nammaev.com.nammaev.ui.view.home.MyServiceAdapter">
+    tools:context="com.nammaev.ui.view.parts.EvPartsAdapter">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivServicePic"

@@ -6,7 +6,7 @@
  *
  */
 
-package com.nammaev.ui.view.home
+package com.nammaev.ui.view.parts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,20 +14,19 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.nammaev.R
 import com.nammaev.data.network.api.response.Services
-import com.nammaev.databinding.LayoutUserItemBinding
+import com.nammaev.databinding.LayoutEvPartsItemBinding
 import com.nammaev.di.getCompatColor
-import com.nammaev.di.loadImage
 
 typealias myService = (Boolean, Services) -> Unit
 
-class MyServiceAdapter(val myService: myService) :
-    RecyclerView.Adapter<MyServiceAdapter.CategoryHolder>() {
+class EvPartsAdapter(val myService: myService) :
+    RecyclerView.Adapter<EvPartsAdapter.CategoryHolder>() {
 
     val serviceList = mutableListOf<Services>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         return CategoryHolder(
-            LayoutUserItemBinding.inflate(
+            LayoutEvPartsItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -48,7 +47,7 @@ class MyServiceAdapter(val myService: myService) :
 
     fun getSelectedServiceList() = serviceList
 
-    inner class CategoryHolder(private val binding: LayoutUserItemBinding) :
+    inner class CategoryHolder(private val binding: LayoutEvPartsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindUi(position: Int) {
             binding.apply {
@@ -61,7 +60,6 @@ class MyServiceAdapter(val myService: myService) :
                     else
                         tvDesc.text = _service.description
 
-                    ivServicePic.loadImage(_service.imageUrl + "")
                     ivServicePic.clipToOutline = true
 
                     //  Added bcs, when working with large data, recyclerview will reuse its old view,
