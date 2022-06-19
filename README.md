@@ -1,5 +1,7 @@
 # NammaEv
 
+Updated Code in **v3** **Branch**
+
 Mobile app developed using kotlin with MVVM architecture and with some stable libraries
 
 Video demo link - https://drive.google.com/file/d/1CnGEqq7Bltwej5RuFpFLhFxhMwP6pJsp/view?usp=drivesdk
