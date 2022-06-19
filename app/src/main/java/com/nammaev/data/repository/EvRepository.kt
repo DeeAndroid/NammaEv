@@ -23,7 +23,7 @@ class EvRepository(private val api: ServiceApi) : ResponseReceiver {
     suspend fun getProducts() = callApi { api.getProducts() }
 
     suspend fun userInfoRepo(
-        regStation: RegStation
+        regStation: ResReg
     ) = callApi {
         api.regStation(regStation)
     }

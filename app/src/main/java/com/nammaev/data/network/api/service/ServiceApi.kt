@@ -34,7 +34,7 @@ interface ServiceApi {
     suspend fun getProducts(): ResProduct
 
     @POST(STATIONS)
-    suspend fun regStation( @Body regStation: RegStation ): ResReg
+    suspend fun regStation( @Body regStation: ResReg ): RegStation
     @POST(ADD_RATING)
     suspend fun addRating(@Body addRatingRequestBody: AddRatingRequestBody): ResAddRating
 

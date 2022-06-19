@@ -31,6 +31,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.nammaev.R
+import com.nammaev.data.network.api.requests.RegStation
+import com.nammaev.data.network.api.response.ResReg
+import com.nammaev.data.network.api.response.UserLocationReq
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentLocationBinding
 import com.nammaev.di.isSuccess
@@ -41,6 +44,7 @@ import com.nammaev.ui.view.nearby.data.MarkerData
 import com.nammaev.ui.view.nearby.interfaces.OnStationClicked
 import com.nammaev.ui.view.nearby.utils.AnimationUtils
 import com.nammaev.ui.view.nearby.utils.MapUtils.getOriginDestinationMarkerBitmap
+import com.nammaev.ui.view.nearby.utils.StationType
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
@@ -65,6 +69,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     private var destinationMarker: Marker? = null
     private var grayPolyline: Polyline? = null
     private var blackPolyline: Polyline? = null
+    private var type:String?=""
     fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     override fun onCreateView(
@@ -143,14 +148,28 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 viewAddStation.radioGroup.setOnCheckedChangeListener { group, checkedId ->
                     when (checkedId) {
                         R.id.rbHome -> {
+                            type= StationType.HOME.toString()
                             viewAddStation.etPrice.isEnabled = true
                         }
                         R.id.rbStation -> {
+                            type= StationType.POWER.toString()
                             viewAddStation.etPrice.isEnabled = true
                         }
                         R.id.rbRepair -> {
+                            type= StationType.REPAIR.toString()
                             viewAddStation.etPrice.isEnabled = false
                         }
+                    }
+                }
+                btnAddStation.setOnClickListener {
+                    val address = viewAddStation.etAddress.text
+                    val price = viewAddStation.etPrice.text
+
+                    when {
+                        address?.isEmpty() == true -> requireActivity() showToast "Add address to continue"
+                        type?.isEmpty() == true -> requireActivity() showToast "Select type to continue"
+                       ( !type?.equals(StationType.REPAIR)!! && price?.isEmpty() == true )-> requireActivity() showToast "Enter Price/Hr to continue"
+                        else -> callApi(address,price, type!!,latLng)
                     }
                 }
 
@@ -158,8 +177,42 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
             listenForData()
             viewModel.getStations()
+            listenAddStation()
+
         }
+
         return binding?.root
+    }
+
+    private fun callApi(address: Editable?, price: Editable?, type: String, latLng: LatLng?) {
+        viewModel.addStations(
+            ResReg().apply {
+                this.userLocation = UserLocationReq().apply {
+                    this.lat = latLng?.latitude.toString()!!
+                    this.lng = latLng?.longitude.toString()!!
+                }
+                this.address = address!!.toString()
+                this.price = price.toString()
+                this.type = type
+            }
+        )
+    }
+
+    private fun listenAddStation() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.responseAddStation.collect { resUser ->
+                when (resUser) {
+                    is Resource.Loading -> (activity as MainActivity).blockInput()
+                    is Resource.Success -> {
+                       requireActivity() showToast resUser.value.message
+                    }
+                    is Resource.Failure -> {
+                        requireActivity() showToast resUser.errorBody
+                        (activity as MainActivity).unblockInput()
+                    }
+                }
+            }
+        }
     }
 
     private fun listenForData() {
@@ -181,9 +234,18 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                                     )
                                 )
                             }
-                            (binding?.userList?.adapter as StationsAdapter).setModelArrayList(markersArray)
+                            (binding?.userList?.adapter as StationsAdapter).setModelArrayList(
+                                markersArray
+                            )
                             if (!markersArray.isNullOrEmpty() && latLng != null) {
-                                mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(markersArray[0].lattitude, markersArray[0].longitude), 250.0f))
+                                mGoogleMap?.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(
+                                            markersArray[0].lattitude,
+                                            markersArray[0].longitude
+                                        ), 250.0f
+                                    )
+                                )
                             }
                         } else
                             requireActivity() showToast resUser.value.message.toString()

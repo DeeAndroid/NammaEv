@@ -37,8 +37,8 @@ class EvViewModel(private val repository: EvRepository) : ViewModel() {
     private val _addRating: MutableStateFlow<Resource<ResAddRating>> = MutableStateFlow(Resource.Loading)
     val addRating: Flow<Resource<ResAddRating>> get() = _addRating
 
-    private val _responseAddStation: MutableStateFlow<Resource<ResReg>> = MutableStateFlow(Resource.Loading)
-    val responseAddStation: Flow<Resource<ResReg>> get() = _responseAddStation
+    private val _responseAddStation: MutableStateFlow<Resource<RegStation>> = MutableStateFlow(Resource.Loading)
+    val responseAddStation: Flow<Resource<RegStation>> get() = _responseAddStation
 
     fun getUser() {
         viewModelScope.launch {
@@ -69,7 +69,7 @@ class EvViewModel(private val repository: EvRepository) : ViewModel() {
     }
 
     fun addStations(
-       regStation: RegStation
+       regStation: ResReg
     ) = viewModelScope.launch {
         _responseAddStation.value = Resource.Loading
         _responseAddStation.value = repository.userInfoRepo(regStation)
