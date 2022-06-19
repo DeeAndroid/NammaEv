@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/spacing_tiny"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="500dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivArrow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_downarrow"
+        android:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:padding="@dimen/spacing_small"
+        android:text="Enter address"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:drawableTint="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivArrow" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_small"
+        android:background="@drawable/edit_text_border"
+        android:drawableEnd="@drawable/ic_add_location"
+        android:gravity="start|top"
+        android:hint="@string/label_enter_address"
+        android:lines="3"
+        android:padding="@dimen/spacing_small"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnProceed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_tiny"
+        android:layout_marginEnd="@dimen/spacing_tiny"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="Proceed"
+        app:backgroundTint="@color/teal_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnCancel"
+        app:layout_constraintTop_toTopOf="@+id/btnCancel" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_tiny"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="Cancel"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/viewbg"
+        app:layout_constraintEnd_toStartOf="@id/btnProceed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etAddress" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

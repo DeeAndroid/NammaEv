@@ -1,0 +1,54 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.NammaEv" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/helvetica</item>
+    </style>
+
+    <style name="NoActionBar" parent="Theme.NammaEv">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
+
+    <style name="DescriptionTextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/spacing_tiny</item>
+        <item name="android:textSize">@dimen/size_12</item>
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:paddingBottom">@dimen/spacing_tiny</item>
+    </style>
+
+    <style name="ThemeNavigation">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorOnSurface">@color/color_on_surface</item>
+        <item name="android:textSize">@dimen/size_12</item>
+    </style>
+
+    <style name="TitleTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/spacing_tiny</item>
+        <item name="android:textSize">@dimen/size_16</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="RatingColor" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/light_black</item>
+        <item name="colorControlActivated">@color/teal_200</item>
+    </style>
+</resources>

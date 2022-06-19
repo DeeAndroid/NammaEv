@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_12">12dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_medium">24dp</dimen>
+    <dimen name="spacing_large">32dp</dimen>
+    <dimen name="spacing_extra_large">64dp</dimen>
+
+    <dimen name="size_9">9sp</dimen>
+    <dimen name="size_10">10sp</dimen>
+    <dimen name="size_11">11sp</dimen>
+    <dimen name="size_12">12sp</dimen>
+    <dimen name="size_13">13sp</dimen>
+    <dimen name="size_15">15sp</dimen>
+    <dimen name="size_16">16sp</dimen>
+    <dimen name="size_18">18sp</dimen>
+    <dimen name="size_20">20sp</dimen>
+    <dimen name="size_24">24sp</dimen>
+    <dimen name="size_26">26sp</dimen>
+    <dimen name="size_36">36sp</dimen>
+    <dimen name="size_14">14sp</dimen>
+
+</resources>
