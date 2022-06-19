@@ -10,7 +10,7 @@ import com.nammaev.ui.view.nearby.data.MarkerData
 import com.nammaev.ui.view.nearby.interfaces.OnStationClicked
 
 class StationsAdapter(var onStationClicked: OnStationClicked) : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
-    var modelArrayList = mutableListOf<MarkerData>()
+    private var modelArrayList = mutableListOf<MarkerData>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -48,7 +48,7 @@ class StationsAdapter(var onStationClicked: OnStationClicked) : RecyclerView.Ada
 
     inner class ViewHolder(val binding: ItemNearbyUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindUI(position: Int, list: ArrayList<MarkerData>, onStationClicked: OnStationClicked) {
+        fun bindUI(position: Int, list: List<MarkerData>, onStationClicked: OnStationClicked) {
 
             binding.apply {
                 userCover.loadImage(list[position].avatar)
