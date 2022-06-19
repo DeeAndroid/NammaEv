@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nammaev.databinding.ItemNearbyUserBinding
+import com.nammaev.di.loadImage
 import com.nammaev.ui.view.nearby.data.MarkerData
 import com.nammaev.ui.view.nearby.interfaces.OnStationClicked
 
 class StationsAdapter(var onStationClicked: OnStationClicked) : RecyclerView.Adapter<StationsAdapter.ViewHolder>() {
-    var modelArrayList: ArrayList<MarkerData> = ArrayList<MarkerData>()
+    var modelArrayList = mutableListOf<MarkerData>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -21,7 +22,6 @@ class StationsAdapter(var onStationClicked: OnStationClicked) : RecyclerView.Ada
             false
         )
     )
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindUI(position, modelArrayList,onStationClicked)
@@ -41,21 +41,17 @@ class StationsAdapter(var onStationClicked: OnStationClicked) : RecyclerView.Ada
     }
 
     fun setModelArrayList(_modelArrayList: List<MarkerData>?) {
+        modelArrayList.clear()
         modelArrayList.addAll(_modelArrayList!!)
+        notifyDataSetChanged()
     }
-
 
     inner class ViewHolder(val binding: ItemNearbyUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private var selected = false
         fun bindUI(position: Int, list: ArrayList<MarkerData>, onStationClicked: OnStationClicked) {
 
             binding.apply {
-                Glide.with(userCover.context)
-                    .load(list[position].avatar)
-                    .circleCrop()
-                    .into(userCover)
-
+                userCover.loadImage(list[position].avatar)
                 binding.parent.setOnClickListener {
                     onStationClicked.onStationClicked(list[position],position)
                 }

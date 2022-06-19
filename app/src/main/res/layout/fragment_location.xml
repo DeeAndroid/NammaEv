@@ -11,7 +11,7 @@
         android:id="@+id/btnAddStation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_24sdp"
         android:backgroundTint="@color/white"
         android:paddingHorizontal="@dimen/_16sdp"
@@ -22,7 +22,7 @@
         android:textStyle="bold"
         app:cornerRadius="@dimen/_25sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/user_list" />
 
 
     <fragment

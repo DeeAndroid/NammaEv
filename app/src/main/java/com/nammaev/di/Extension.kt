@@ -52,6 +52,15 @@ fun ImageView.loadImage(image: Any) {
         .into(this)
 }
 
+fun ImageView.loadImage(image: String) {
+    Glide.with(context)
+        .load(image)
+        .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground))
+        .circleCrop()
+        .transition(DrawableTransitionOptions.with(CrossFadeDrawable()))
+        .into(this)
+}
+
 fun Activity.showAlert(title: String, message: String) {
     val exitDialog = androidx.appcompat.app.AlertDialog.Builder(this)
     exitDialog.setTitle(title)

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nammaev.R
 import com.nammaev.data.network.api.response.AddRatingRequestBody
+import com.nammaev.data.network.api.response.DataItem
 import com.nammaev.data.network.api.response.Product
 import com.nammaev.data.viewmodel.EvViewModel
 import com.nammaev.databinding.FragmentStationDetailsDialogBinding
@@ -26,7 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 typealias onPositionSelection = (position: Int) -> Unit
 
-class StationDetailsDialogFragment(private val position: Int, val onPositionSelection: onPositionSelection) : BottomSheetDialogFragment() {
+class StationDetailsDialogFragment(private val position: Int, val onPositionSelection: onPositionSelection, val station: DataItem) : BottomSheetDialogFragment() {
 
     private val viewModel by sharedViewModel<EvViewModel>()
 
@@ -39,6 +40,8 @@ class StationDetailsDialogFragment(private val position: Int, val onPositionSele
         if (binding == null)
            binding = FragmentStationDetailsDialogBinding.inflate(layoutInflater, container, false)
 
+        binding?.price?.text=station.price+"/hr"
+        binding?.tvTitle?.text=station.type
 
         binding?.ratingBar?.setOnTouchListener { v, event ->
             when (event?.action) {
@@ -99,9 +102,10 @@ class StationDetailsDialogFragment(private val position: Int, val onPositionSele
         fun showAddressBottomSheet(
             fragmentManager: FragmentManager,
             position: Int,
+            station: DataItem,
             onPositionSelection: onPositionSelection
         ) {
-            StationDetailsDialogFragment(position, onPositionSelection).show(fragmentManager, TAG)
+            StationDetailsDialogFragment(position, onPositionSelection, station).show(fragmentManager, TAG)
         }
     }
 }

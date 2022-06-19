@@ -88,7 +88,8 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                     override fun onStationClicked(id: MarkerData, position: Int) {
                         StationDetailsDialogFragment.showAddressBottomSheet(
                             childFragmentManager,
-                            position
+                            position,
+                            id.station
                         ) {
                             val paths: MutableList<LatLng> = ArrayList<LatLng>()
                             paths.add(0, latLng!!)
@@ -142,13 +143,13 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 viewAddStation.radioGroup.setOnCheckedChangeListener { group, checkedId ->
                     when (checkedId) {
                         R.id.rbHome -> {
-                            viewAddStation.group.isEnabled = true
+                            viewAddStation.etPrice.isEnabled = true
                         }
                         R.id.rbStation -> {
-                            viewAddStation.group.isEnabled = true
+                            viewAddStation.etPrice.isEnabled = true
                         }
                         R.id.rbRepair -> {
-                            viewAddStation.group.isEnabled = false
+                            viewAddStation.etPrice.isEnabled = false
                         }
                     }
                 }
@@ -172,6 +173,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                             resUser.value.data?.forEachIndexed { index, resStationItem ->
                                 markersArray.add(
                                     index, MarkerData(
+                                        resStationItem!!,
                                         resStationItem?.location?.lat?.toDouble()!!,
                                         resStationItem.location.lng?.toDouble()!!,
                                         resStationItem.avatar.toString(),
@@ -180,16 +182,8 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                                 )
                             }
                             (binding?.userList?.adapter as StationsAdapter).setModelArrayList(markersArray)
-                            if (!markersArray.isNullOrEmpty()) {
-                                addMarkers(mGoogleMap)
-                                mGoogleMap?.animateCamera(
-                                    CameraUpdateFactory.newLatLng(
-                                        LatLng(
-                                            markersArray[0].lattitude,
-                                            markersArray[0].longitude
-                                        )
-                                    ), 250, null
-                                )
+                            if (!markersArray.isNullOrEmpty() && latLng != null) {
+                                mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(markersArray[0].lattitude, markersArray[0].longitude), 250.0f))
                             }
                         } else
                             requireActivity() showToast resUser.value.message.toString()
@@ -262,6 +256,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 markersArray.set(
                     i,
                     MarkerData(
+                        markersArray[i].station,
                         markersArray[i].lattitude,
                         markersArray[i].longitude,
                         markersArray[i].avatar,
@@ -272,6 +267,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                 markersArray.set(
                     position,
                     MarkerData(
+                        markersArray[i].station,
                         markersArray[position].lattitude,
                         markersArray[position].longitude,
                         markersArray[position].avatar,
