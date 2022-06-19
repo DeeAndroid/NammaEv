@@ -50,7 +50,7 @@ class EvPartsAdapter(val myService: myService) :
             binding.apply {
                 productList[position].let { product ->
                     tvPartTitle.text = product.name
-                    tvCost.text = "Cost: ${product.price} sar"
+                    tvCost.text = "Cost: ₹ ${product.price}"
                     tvDesc.text = product.description
 
                     ivProductPic.loadImage(product.icon.toString())
