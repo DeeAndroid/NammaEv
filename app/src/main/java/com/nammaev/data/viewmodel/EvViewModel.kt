@@ -10,6 +10,11 @@ package com.nammaev.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nammaev.data.network.api.requests.RegStation
+import com.nammaev.data.network.api.response.ResProduct
+import com.nammaev.data.network.api.response.ResReg
+import com.nammaev.data.network.api.response.ResStation
+import com.nammaev.data.network.api.response.ResUser
 import com.nammaev.data.network.api.response.*
 import com.nammaev.data.repository.EvRepository
 import com.nammaev.di.utility.Resource
@@ -31,6 +36,9 @@ class EvViewModel(private val repository: EvRepository) : ViewModel() {
 
     private val _addRating: MutableStateFlow<Resource<ResAddRating>> = MutableStateFlow(Resource.Loading)
     val addRating: Flow<Resource<ResAddRating>> get() = _addRating
+
+    private val _responseAddStation: MutableStateFlow<Resource<ResReg>> = MutableStateFlow(Resource.Loading)
+    val responseAddStation: Flow<Resource<ResReg>> get() = _responseAddStation
 
     fun getUser() {
         viewModelScope.launch {
@@ -59,5 +67,13 @@ class EvViewModel(private val repository: EvRepository) : ViewModel() {
             _addRating.value = repository.addRating(addRatingRequestBody)
         }
     }
+
+    fun addStations(
+       regStation: RegStation
+    ) = viewModelScope.launch {
+        _responseAddStation.value = Resource.Loading
+        _responseAddStation.value = repository.userInfoRepo(regStation)
+    }
+
 
 }

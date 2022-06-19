@@ -40,7 +40,7 @@ class PartsFragment : Fragment() {
         binding?.apply {
             rvParts.adapter = EvPartsAdapter { service ->
                 AddressBottomSheetDialog.showAddressBottomSheet(childFragmentManager) { address ->
-
+                    requireActivity() showToast "Successfully brought"
                 }
             }
         }
